@@ -85,7 +85,7 @@ class UsuariosController extends Controller
     }
 
     // Função para atualizar as informações de um usuário no banco de dados
-    public function update(Request $request, $id)
+    public function update(UsuariosRequest $request, $id)
     {
         $data = [
             'nome' => $request->input('nome'),

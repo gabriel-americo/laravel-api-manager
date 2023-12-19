@@ -6,7 +6,8 @@
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detalhe da Ideia</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detalhe da
+                        Ideia</h1>
 
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -25,11 +26,15 @@
 
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-body p-lg-17">
                         <div class="mb-10">
                             <div class="mb-10">
-
                                 <h3 class="fs-2hx text-dark mb-5">{{ $ideias->nome }}</h3>
 
                                 <div class="d-flex flex-wrap mb-6">
@@ -75,7 +80,8 @@
 
                                         <div class="d-flex flex-column">
                                             <div class="d-flex align-items-center mb-2">
-                                                <span class="text-dark fs-4 me-3 fw-semibold">{{ $pergunta->perguntas }}</span>
+                                                <span
+                                                    class="text-dark fs-4 me-3 fw-semibold">{{ $pergunta->perguntas }}</span>
                                             </div>
 
                                             <span class="text-muted fw-semibold fs-6">{{ $pergunta->respostas }}</span>
@@ -107,10 +113,12 @@
                                             </a>
 
                                             <div class="mt-5">
-                                                <span class="fs-4 text-dark fw-bold text-dark lh-base">{{ $image->legenda }}</span>
+                                                <span
+                                                    class="fs-4 text-dark fw-bold text-dark lh-base">{{ $image->legenda }}</span>
 
                                                 <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
-                                                    <a href="#" class="btn btn-sm btn-primary">Download</a>
+                                                    <a href="{{ route('ideias.imagem.download', $image->id) }}"
+                                                        class="btn btn-sm btn-primary">Download</a>
                                                 </div>
                                             </div>
                                         </div>

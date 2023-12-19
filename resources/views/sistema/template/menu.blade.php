@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item {{ Request::is('aprovacoes*') ? 'here show' : '' }} menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="bi bi-check-all fs-2"></i>
@@ -116,7 +116,7 @@
 
                         <div class="menu-sub menu-sub-accordion">
                             <div class="menu-item">
-                                <a class="menu-link" href="#">
+                                <a class="menu-link {{ Request::is('aprovacoes') ? 'active' : '' }}" href="{{ route('aprovacoes.index') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -125,7 +125,7 @@
                             </div>
 
                             <div class="menu-item">
-                                <a class="menu-link" href="#">
+                                <a class="menu-link {{ Request::is('aprovacoes/create') ? 'active' : '' }}" href="{{ route('aprovacoes.create') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>

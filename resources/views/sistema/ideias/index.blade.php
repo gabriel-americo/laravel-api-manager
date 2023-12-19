@@ -107,8 +107,9 @@
                                     <th class="min-w-125px">Data do Inicio</th>
                                     <th class="min-w-125px">Data da Entrega</th>
                                     <th class="min-w-125px">Data do Lançamento</th>
-                                    <th class="min-w-125px">Criador da Arte</th>
-                                    <th class="min-w-125px">Status</th>
+                                    <th class="min-w-100px">Criador da Arte</th>
+                                    <th class="min-w-95px">Status</th>
+                                    <th class="text-center min-w-95px">Imagens</th>
                                     <th class="text-end min-w-100px">Ações</th>
                                 </tr>
                             </thead>
@@ -131,6 +132,7 @@
                                                 {{ $ideia->status }}
                                             </div>
                                         </td>
+                                        <td class="text-center"><a href="{{ route('ideias.images', $ideia->id) }}"><i class="bi bi-images fs-1"></i></a></td>
                                         <td class="text-end">
                                             <a href="#"
                                                 class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm"

@@ -10,6 +10,7 @@ use App\Http\Requests\IdeiasRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as Controller;
+use Illuminate\Support\Facades\Storage;
 
 class IdeiasController extends Controller
 {
@@ -63,7 +64,7 @@ class IdeiasController extends Controller
 
             flash('Ideia cadastrada com sucesso!')->success();
 
-            return redirect()->route('ideias.index');
+            return redirect()->route('ideias.edit', ['id' => $ideia->id]);
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
 
@@ -80,13 +81,13 @@ class IdeiasController extends Controller
 
     public function edit($id)
     {
-        $ideias = $this->ideias->findOrFail($id);
-        $count = $ideias->perguntas()->count();
+        $ideia = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
+        $count = $ideia->perguntas()->count();
 
-        $checked = ($ideias['status'] == 'Ativa' ? 'checked="checked"' : '');
-        $status = ($ideias['status'] == 'Ativa' ? '1' : '0');
+        $checked = ($ideia['status'] == 'Ativa' ? 'checked="checked"' : '');
+        $status = ($ideia['status'] == 'Ativa' ? '1' : '0');
 
-        return view('sistema.ideias.edit', compact('ideias', 'checked', 'status', 'count'));
+        return view('sistema.ideias.edit', compact('ideia', 'checked', 'status', 'count'));
     }
 
     public function update(IdeiasRequest $request, $id)
@@ -135,6 +136,61 @@ class IdeiasController extends Controller
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
 
+            return redirect()->back();
+        }
+    }
+
+    public function download($id)
+    {
+        $dataImagem = ImagemIdeias::findOrFail($id);
+
+        if ($dataImagem) {
+            $path = 'public/img/ideias/' . $dataImagem->imagem;
+
+            // Verifica se o arquivo existe no armazenamento (storage)
+            if (Storage::exists($path)) {
+                // Define o nome do arquivo para download
+                $fileName = basename($dataImagem->imagem);
+
+                // Realiza o download do arquivo
+                return response()->download(storage_path('app/' . $path), $fileName);
+            }
+        }
+
+        // Caso o arquivo não exista, retorne uma resposta adequada (por exemplo, redirecione ou exiba uma mensagem de erro)
+        return redirect()->back()->with('error', 'A imagem não está disponível para download.');
+    }
+
+    public function createImages($id)
+    {
+        $ideia = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
+
+        return view('sistema.ideias.images', compact('ideia'));
+    }
+
+    public function uploadImages(Request $request)
+    {
+        $request->validate([
+            'ideia_id' => 'required|exists:ideias,id',
+            'imageFile' => 'required|array',
+            'imageFile.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
+        ]);
+
+        try {
+            $ideia = $this->ideias->findOrFail($request->ideia_id);
+
+            if ($request->hasFile('imageFile')) {
+                foreach ($request->file('imageFile') as $file) {
+                    $imageName = uniqid() . '-' . trim($file->getClientOriginalName());
+                    $path = $file->storeAs('/img/ideias', $imageName);
+                    $ideia->imagens()->create(['imagem' => $path]);
+                }
+
+                flash('Upload realizado com sucesso!')->success();
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            flash($e->getMessage())->warning();
             return redirect()->back();
         }
     }

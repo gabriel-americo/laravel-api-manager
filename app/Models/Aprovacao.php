@@ -8,7 +8,7 @@ class Aprovacao extends Model
     protected $table='aprovacao';
 
     protected $fillable = ['descricao', 'status', 'ideias_id'];
-    
+
     public function getStatusAttribute()
     {
         return $this->attributes['status'] == 1 ? "Sim" : "Não";

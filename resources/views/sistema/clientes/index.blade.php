@@ -115,7 +115,8 @@
                                     <tr>
                                         <td>
                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="{{ $cliente->id }}" />
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $cliente->id }}" />
                                             </div>
                                         </td>
                                         <td>
@@ -145,7 +146,8 @@
                                                 </div>
 
                                                 <form class="menu-item px-3 sweetalert-delete"
-                                                    action="{{ route('clientes.destroy', $cliente->id) }}" method="POST">
+                                                    action="{{ route('clientes.destroy', $cliente->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="menu-link px-3 button-delete"

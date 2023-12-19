@@ -34,8 +34,7 @@ const KTSweetAlert2Delete = (function () {
 $(document).ready(() => {
     KTSweetAlert2Delete.init();
 
-    const input1 = $('#nome_cli');
-    const [input2, input3] = [$('#nome_cob'), $('#nome_env')];
+    const [input1, input2, input3] = [$('#nome_cli'), $('#nome_cob'), $('#nome_env')];
 
     input1.on('keyup', () => {
         input2.val(input1.val());

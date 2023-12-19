@@ -287,7 +287,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="cep_cobrancas"
+                                            <input type="text" name="cep_cobrancas" id="cep_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 cep"
                                                 placeholder="CEP" value="{{ old('cep_cobrancas') }}">
                                         </div>
@@ -300,7 +300,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="rua_cobrancas"
+                                            <input type="text" name="rua_cobrancas" id="rua_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Rua" value="{{ old('rua_cobrancas') }}">
                                         </div>
@@ -326,7 +326,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="bairro_cobrancas"
+                                            <input type="text" name="bairro_cobrancas" id="bairro_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Bairro" value="{{ old('bairro_cobrancas') }}">
                                         </div>
@@ -352,7 +352,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="cidade_cobrancas"
+                                            <input type="text" name="cidade_cobrancas" id="cidade_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Cidade" value="{{ old('cidade_cobrancas') }}">
                                         </div>
@@ -365,7 +365,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="estado_cobrancas"
+                                            <input type="text" name="estado_cobrancas" id="estado_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Estado" value="{{ old('estado_cobrancas') }}">
                                         </div>
@@ -460,7 +460,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="cep_envios"
+                                            <input type="text" name="cep_envios" id="cep_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="CEP" value="{{ old('cep_envios') }}">
                                         </div>
@@ -473,7 +473,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="rua_envios"
+                                            <input type="text" name="rua_envios" id="rua_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Rua" value="{{ old('rua_envios') }}">
                                         </div>
@@ -512,7 +512,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="bairro_envios"
+                                            <input type="text" name="bairro_envios" id="bairro_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Bairro" value="{{ old('bairro_envios') }}">
                                         </div>
@@ -525,7 +525,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="cidade_envios"
+                                            <input type="text" name="cidade_envios" id="cidade_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Cidade" value="{{ old('cidade_envios') }}">
                                         </div>
@@ -551,7 +551,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="estado_envios"
+                                            <input type="text" name="estado_envios" id="estado_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Estado" value="{{ old('estado_envios') }}">
                                         </div>
@@ -595,4 +595,52 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('ajax-status')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#cep_cobrancas').on('input', function() {
+                var cep = $(this).val().replace(/\D/g, '');
+
+                if (cep.length === 8) {
+                    $.ajax({
+                        url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                        type: 'GET',
+                        success: function(response) {
+                            $('#rua_cobrancas').val(response.logradouro);
+                            $('#cidade_cobrancas').val(response.localidade);
+                            $('#estado_cobrancas').val(response.uf);
+                            $('#bairro_cobrancas').val(response.bairro);
+                            $('#estado_cobrancas').val(response.uf);
+                        },
+                        error: function() {
+                            alert('CEP não encontrado.');
+                        }
+                    });
+                }
+            });
+
+            $('#cep_envios').on('input', function() {
+                var cep = $(this).val().replace(/\D/g, '');
+
+                if (cep.length === 8) {
+                    $.ajax({
+                        url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                        type: 'GET',
+                        success: function(response) {
+                            $('#rua_envios').val(response.logradouro);
+                            $('#cidade_envios').val(response.localidade);
+                            $('#estado_envios').val(response.uf);
+                            $('#bairro_envios').val(response.bairro);
+                            $('#estado_envios').val(response.uf);
+                        },
+                        error: function() {
+                            alert('CEP não encontrado.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

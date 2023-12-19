@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <form class="form" action="{{ route('ideias.store') }}" method="POST">
+                    <form class="form" action="{{ route('ideias.store') }}" method="POST" enctype="multipart/form-data">
                         <div class="card-body border-top p-9">
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Nome da Arte</label>
@@ -105,7 +105,8 @@
                             <div class="d-flex flex-column mb-15 fv-row">
                                 <div class="fs-5 fw-bold form-label mb-3">Briefing
                                     <span class="ms-2 cursor-pointer" data-bs-toggle="popover" data-bs-trigger="hover"
-                                        data-bs-html="true" data-bs-content="Cadastre as respostas para melhor entendimento da ideia.">
+                                        data-bs-html="true"
+                                        data-bs-content="Cadastre as respostas para melhor entendimento da ideia.">
                                         <i class="ki-duotone ki-information fs-7">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
@@ -127,28 +128,29 @@
 
                                         <tbody>
                                             @foreach ($autoPergunta as $pergunta)
-                                            <tr>
-                                                <td>
-                                                    <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ $pergunta }}</textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ old('resposta') }}</textarea>
-                                                </td>
-                                                <td class="text-end">
-                                                    <button type="button"
-                                                        class="btn btn-icon btn-flex btn-active-light-primary w-50px h-50px me-3"
-                                                        data-kt-action="field_remove">
-                                                        <i class="bi bi-trash3 fs-3"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>
+                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ $pergunta }}</textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ old('resposta') }}</textarea>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <button type="button"
+                                                            class="btn btn-icon btn-flex btn-active-light-primary w-50px h-50px me-3"
+                                                            data-kt-action="field_remove">
+                                                            <i class="bi bi-trash3 fs-3"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
 
                                 <button type="button" class="btn btn-light-primary me-auto"
-                                    id="kt_create_new_custom_fields_add"> <i class="bi bi-plus"></i> Adicionar Pergunta</button>
+                                    id="kt_create_new_custom_fields_add"> <i class="bi bi-plus"></i> Adicionar
+                                    Pergunta</button>
                             </div>
 
                             <div class="mb-10">
@@ -207,9 +209,5 @@
                 }
             };
         }();
-
-        jQuery(document).ready(function() {
-            KTCkeditor.init();
-        });
     </script>
 @endsection

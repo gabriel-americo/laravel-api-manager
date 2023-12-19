@@ -11,7 +11,7 @@
 
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="#" class="d-lg-none">
-                <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-30px" />
+                <img alt="Logo" src="{{ asset('assets/media/logos/default-small.svg') }}" class="h-30px" />
             </a>
         </div>
 
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true" id="kt_menu_notifications">
-                        <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('assets/media/misc/menu-header-bg.jpg')">
+                        <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('{{ asset('assets/media/misc/menu-header-bg.jpg') }}')">
                             <h3 class="text-white fw-semibold px-9 mt-10 mb-6">Notificações
                             <span class="fs-8 opacity-75 ps-3">5 relatórios</span></h3>
 
@@ -174,7 +174,7 @@
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link d-flex px-5">
                                     <span class="symbol symbol-20px me-4">
-                                        <img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+                                        <img class="rounded-1" src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
                                     </span>Inglês</a>
                                 </div>
                             </div>
