@@ -136,8 +136,11 @@
                                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                 <a href="{{ route('usuarios.show', $usuario->id) }}">
                                                     <div class="symbol-label">
-                                                        <img src="{{ $usuario->imagem ? asset('storage/img/usuarios/' . $usuario->imagem) : asset('assets/media/avatars/blank.png') }}"
-                                                            alt="{{ $usuario->nome }}" class="w-100" />
+                                                        @if($usuario->imagem && File::exists(public_path('storage/img/usuarios/' . $usuario->imagem)))
+                                                            <img src="{{ asset('storage/img/usuarios/' . $usuario->imagem) }}" alt="{{ $usuario->nome }}" class="w-100" />
+                                                        @else
+                                                            <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ $usuario->nome }}" class="w-100" />
+                                                        @endif
                                                     </div>
                                                 </a>
                                             </div>
@@ -342,7 +345,8 @@
                             "click",
                             () => {
                                 document.querySelector('[data-kt-table-filter="form"]').querySelectorAll(
-                                    "select").forEach((select) => {
+                                    "select"
+                                ).forEach((select) => {
                                     $(select).val("").trigger("change");
                                 });
                                 e.search("").draw();

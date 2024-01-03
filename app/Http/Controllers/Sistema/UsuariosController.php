@@ -26,6 +26,7 @@ class UsuariosController extends Controller
     {
         $usuarios = $this->usuario->with('roles')->get();
         $roles = Role::all();
+
         return view('sistema.usuarios.index', compact('usuarios', 'roles'));
     }
 
@@ -33,6 +34,7 @@ class UsuariosController extends Controller
     public function create()
     {
         $roles = Role::all();
+
         return view('sistema.usuarios.create', compact('roles'));
     }
 
@@ -71,6 +73,7 @@ class UsuariosController extends Controller
     public function show($id)
     {
         $usuario = $this->usuario->with('roles')->findOrFail($id);
+
         return view('sistema.usuarios.show', compact('usuario'));
     }
 
@@ -85,10 +88,11 @@ class UsuariosController extends Controller
     }
 
     // Função para atualizar as informações de um usuário no banco de dados
-    public function update(UsuariosRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $data = [
             'nome' => $request->input('nome'),
+            'user' => $request->input('user'),
             'sexo' => $request->input('sexo'),
             'status' => $request->has('status') ? '1' : '0',
         ];
@@ -123,9 +127,9 @@ class UsuariosController extends Controller
     // Função para excluir um usuário do banco de dados
     public function destroy($id)
     {
-        $usuario = $this->usuario->findOrFail($id);
-
         try {
+            $usuario = $this->usuario->findOrFail($id);
+
             if ($usuario->imagem !== null) {
                 File::delete(public_path('storage/img/usuarios/' . $usuario->imagem));
             }
@@ -140,24 +144,45 @@ class UsuariosController extends Controller
         }
     }
 
+    // Função para alterar a email de um usuário
+    public function changeEmail(Request $request, $id)
+    {
+        $usuario = $this->usuario->findOrFail($id);
+
+        if (Hash::check($request->confirmemailpassword, $usuario->password)) {
+            $usuario->email = $request->email;
+            $usuario->save();
+
+            flash('Email atualizado com sucesso!')->success();
+            return redirect()->back();
+        } else {
+            flash('Senha incorreta. Não foi possível atualizar o email.')->error();
+            return redirect()->back();
+        }
+    }
+
     // Função para alterar a senha de um usuário
     public function changePassword(Request $request, $id)
     {
-        $hashedPassword = Auth::user()->password;
+        $usuario = $this->usuario::find($id);
 
-        if (Hash::check($request->oldpassword, $hashedPassword)) {
+        $currentPassword = $request->input('currentpassword');
+        $newPassword = $request->input('newpassword');
 
-            if (!Hash::check($request->newpassword, $hashedPassword)) {
-                $this->usuario->where('id', $id)->update(['password' => $request->newpassword]);
-
-                flash('Password atualizado com sucesso!')->success();
-            } else {
-                flash('O seu novo password não pode ser igual o antigo!')->warning();
-            }
+        if (!Hash::check($currentPassword, $usuario->password)) {
+            flash('A senha atual não está correta!')->warning();
+            return redirect()->back();
         }
 
-        flash('Password antigo não é o mesmo!')->warning();
+        if (Hash::check($newPassword, $usuario->password)) {
+            flash('A nova senha não pode ser igual à anterior!')->warning();
+            return redirect()->back();
+        }
 
+        $usuario->password = Hash::make($newPassword);
+        $usuario->save();
+
+        flash('Senha atualizada com sucesso!')->success();
         return redirect()->back();
     }
 
@@ -182,6 +207,16 @@ class UsuariosController extends Controller
     // Função para excluir vários usuários de uma vez
     public function multiDelete(Request $request)
     {
+        $selectedUsers = $this->usuario->whereIn('id', $request->get('selected'))->get();
+
+        foreach ($selectedUsers as $user) {
+            // Verifica se a imagem do usuário não é nula e deleta a imagem correspondente
+            if ($user->imagem !== null) {
+                File::delete(public_path('storage/img/usuarios/' . $user->imagem));
+            }
+        }
+
+        // Deleta os usuários selecionados
         $this->usuario->whereIn('id', $request->get('selected'))->delete();
 
         return response("Usuarios selecionados excluídos com sucesso.", 200);

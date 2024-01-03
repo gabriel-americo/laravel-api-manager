@@ -15,6 +15,6 @@ class EnderecoEnvios extends Model
 
     public function clienteEnvio()
     {
-        return $this->belongsTo(Clientes::class, 'clientes_id', 'id');
+        return $this->belongsTo(Cliente::class, 'clientes_id', 'id');
     }
 }

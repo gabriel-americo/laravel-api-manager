@@ -13,6 +13,10 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 -   **Publicação Agendada:** Recurso para agendar a data e hora de publicação de conteúdo.
 -   **Gestão de Mídia:** Upload, armazenamento e otimização de imagens, vídeos e arquivos de mídia.
 
+### Sistema de Login
+
+-  **Login pelo usuario ou email:** Interface para login com email ou usuario e senha.
+
 ### Controle de Usuários e Permissões
 
 -   **Autenticação e Segurança:** Sistemas robustos de autenticação e medidas de segurança para proteger dados sensíveis.
@@ -46,7 +50,7 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 
 -   PHP 8.0 ou superior
 -   Composer
--   Banco de dados (MySQL, PostgreSQL, etc.)
+-   Banco de dados Relacional (MySQL, PostgreSQL, etc.)
 
 ### Passos para Instalação
 
@@ -60,6 +64,7 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 
     ```bash
     composer install
+    composer require laracasts/flash
     ```
 
 3. Configure o arquivo `.env` com as informações do banco de dados:

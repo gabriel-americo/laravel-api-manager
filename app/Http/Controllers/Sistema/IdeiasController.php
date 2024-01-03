@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Sistema;
 
-use App\Models\Ideias;
-use App\Models\ImagemIdeias;
-use App\Models\PerguntasIdeias;
+use App\Models\Ideia;
+use App\Models\ImagemIdeia;
+use App\Models\PerguntaIdeia;
 
 use App\Http\Requests\IdeiasRequest;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class IdeiasController extends Controller
 {
     protected $ideias;
 
-    public function __construct(Ideias $ideias)
+    public function __construct(Ideia $ideias)
     {
         $this->ideias = $ideias;
     }
@@ -100,7 +100,7 @@ class IdeiasController extends Controller
             $ideia->update($data);
 
             foreach ($request->grupo_perguntas as $i => $values) {
-                $idPergunta = PerguntasIdeias::where('ideias_id', $id)->pluck('id')->toArray();
+                $idPergunta = PerguntaIdeia::where('ideias_id', $id)->pluck('id')->toArray();
 
                 if (empty($idPergunta[$i])) {
                     $ideia->perguntas()->create(['perguntas' => $values['pergunta'], 'respostas' => $values['resposta'], 'usuarios_id' => $user_id]);
@@ -122,8 +122,8 @@ class IdeiasController extends Controller
     public function destroy($id)
     {
         $ideia = $this->ideias->findOrFail($id);
-        $imagemId = ImagemIdeias::where('ideias_id', $id);
-        $perguntasId = PerguntasIdeias::where('ideias_id', $id);
+        $imagemId = ImagemIdeia::where('ideias_id', $id);
+        $perguntasId = PerguntasIdeia::where('ideias_id', $id);
 
         try {
             $ideia->delete();
@@ -142,7 +142,7 @@ class IdeiasController extends Controller
 
     public function download($id)
     {
-        $dataImagem = ImagemIdeias::findOrFail($id);
+        $dataImagem = ImagemIdeia::findOrFail($id);
 
         if ($dataImagem) {
             $path = 'public/img/ideias/' . $dataImagem->imagem;

@@ -10,7 +10,7 @@
 
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
-                        <span class="text-hover-primary">Usuarios</span>
+                        <a href="{{ route('usuarios.index') }}" class="text-hover-primary">Usuarios</a>
                     </li>
 
                     <li class="breadcrumb-item">
@@ -30,7 +30,11 @@
                     <div class="d-flex flex-wrap flex-sm-nowrap">
                         <div class="me-7 mb-4">
                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                <img src="{{ $usuario->imagem ? asset('storage/img/usuarios/' . $usuario->imagem) : asset('assets/media/svg/avatars/blank.svg') }}" alt="{{ $usuario->nome }}" />
+                                @if($usuario->imagem && File::exists(public_path('storage/img/usuarios/' . $usuario->imagem)))
+                                    <img src="{{ asset('storage/img/usuarios/' . $usuario->imagem) }}" alt="{{ $usuario->nome }}" />
+                                @else
+                                    <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ $usuario->nome }}" />
+                                @endif
                                 <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                             </div>
                         </div>

@@ -30,12 +30,6 @@ class Usuario extends Authenticatable
         return $this->belongsToMany(Role::class, 'roles_usuarios', 'usuarios_id', 'roles_id');
     }
 
-    // Verifica se o usuário possui uma role específica
-    public function hasRole($role)
-    {
-        return $this->roles()->where('nome', $role)->exists();
-    }
-
     // Criptografa a senha antes de atribuí-la ao modelo
     public function setPasswordAttribute($password)
     {
@@ -43,8 +37,8 @@ class Usuario extends Authenticatable
     }
 
     // Acessor para o atributo 'status', retorna 'Ativo' se for 1, senão 'Desativado'
-    public function getStatusAttribute()
+    public function getStatusAttribute($value)
     {
-        return $this->attributes['status'] == 1 ? 'Ativo' : 'Desativado';
+        return $value ? 'Ativo' : 'Desativado';
     }
 }

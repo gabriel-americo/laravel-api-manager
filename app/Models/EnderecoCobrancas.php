@@ -17,6 +17,6 @@ class EnderecoCobrancas extends Model
 
     public function clienteCobranca()
     {
-        return $this->belongsTo(Clientes::class, 'clientes_id', 'id');
+        return $this->belongsTo(Cliente::class, 'clientes_id', 'id');
     }
 }

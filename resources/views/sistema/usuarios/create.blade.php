@@ -133,7 +133,7 @@
                         <div class="row mb-6">
                             <label class="col-lg-4 col-form-label fw-semibold fs-6">
                                 <span class="required">Função</span>
-                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Função do usuário"></i>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Função do usuário para definir a prioridade"></i>
                             </label>
                             <div class="col-lg-8 fv-row">
                                 <select name="roles" aria-label="Selecione uma função" data-control="select2" data-placeholder="Selecione uma função..." class="form-select form-select-solid form-select-lg fw-semibold">

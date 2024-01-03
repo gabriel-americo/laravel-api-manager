@@ -58,29 +58,21 @@
                                 </div>
 
                                 <div class="card-body pt-2">
-                                    <!--begin::Nav-->
                                     <ul class="nav nav-pills nav-pills-custom mb-3">
-                                        <!--begin::Item-->
                                         <li class="nav-item mb-3 me-3 me-lg-6">
-                                            <!--begin::Link-->
                                             <a class="nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4"
                                                 data-bs-toggle="pill" href="#kt_stats_widget_2_tab_1">
-                                                <!--begin::Icon-->
                                                 <div class="nav-icon">
                                                     <img alt=""
                                                         src="assets/media/svg/products-categories/t-shirt.svg"
                                                         class="" />
                                                 </div>
-                                                <!--end::Icon-->
-                                                <!--begin::Subtitle-->
+
                                                 <span class="nav-text text-gray-700 fw-bold fs-6 lh-1">T-shirt</span>
-                                                <!--end::Subtitle-->
-                                                <!--begin::Bullet-->
+
                                                 <span
                                                     class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                                                <!--end::Bullet-->
                                             </a>
-                                            <!--end::Link-->
                                         </li>
 
                                         <li class="nav-item mb-3 me-3 me-lg-6">
@@ -266,20 +258,13 @@
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                    <!--end::Table body-->
                                                 </table>
-                                                <!--end::Table-->
                                             </div>
-                                            <!--end::Table container-->
                                         </div>
-                                        <!--end::Tap pane-->
-                                        <!--begin::Tap pane-->
+
                                         <div class="tab-pane fade" id="kt_stats_widget_2_tab_2">
-                                            <!--begin::Table container-->
                                             <div class="table-responsive">
-                                                <!--begin::Table-->
                                                 <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
-                                                    <!--begin::Table head-->
                                                     <thead>
                                                         <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
                                                             <th class="ps-0 w-50px">ITEM</th>
@@ -289,8 +274,7 @@
                                                             <th class="pe-0 text-end min-w-100px">TOTAL PRICE</th>
                                                         </tr>
                                                     </thead>
-                                                    <!--end::Table head-->
-                                                    <!--begin::Table body-->
+
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -370,20 +354,13 @@
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                    <!--end::Table body-->
                                                 </table>
-                                                <!--end::Table-->
                                             </div>
-                                            <!--end::Table container-->
                                         </div>
-                                        <!--end::Tap pane-->
-                                        <!--begin::Tap pane-->
+
                                         <div class="tab-pane fade" id="kt_stats_widget_2_tab_3">
-                                            <!--begin::Table container-->
                                             <div class="table-responsive">
-                                                <!--begin::Table-->
                                                 <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
-                                                    <!--begin::Table head-->
                                                     <thead>
                                                         <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
                                                             <th class="ps-0 w-50px">ITEM</th>
@@ -393,8 +370,7 @@
                                                             <th class="pe-0 text-end min-w-100px">TOTAL PRICE</th>
                                                         </tr>
                                                     </thead>
-                                                    <!--end::Table head-->
-                                                    <!--begin::Table body-->
+
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -474,20 +450,13 @@
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                    <!--end::Table body-->
                                                 </table>
-                                                <!--end::Table-->
                                             </div>
-                                            <!--end::Table container-->
                                         </div>
-                                        <!--end::Tap pane-->
-                                        <!--begin::Tap pane-->
+
                                         <div class="tab-pane fade" id="kt_stats_widget_2_tab_4">
-                                            <!--begin::Table container-->
                                             <div class="table-responsive">
-                                                <!--begin::Table-->
                                                 <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
-                                                    <!--begin::Table head-->
                                                     <thead>
                                                         <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
                                                             <th class="ps-0 w-50px">ITEM</th>

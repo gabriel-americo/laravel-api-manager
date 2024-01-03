@@ -9,18 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // Exibe o formulário de login
     public function showLoginForm()
     {
-        // Se o usuário estiver autenticado, ele será redirecionado automaticamente para o painel.
         return view('sistema.login');
     }
 
+    // Exibe o dashboard após o login
     public function dashboard()
     {
-        // Se o usuário não estiver autenticado, ele será redirecionado automaticamente para a página de login.
         return view('sistema.dashboard');
     }
 
+    // Processa a tentativa de login do usuário
     public function login(Request $request)
     {
         // Valida os campos de entrada.
@@ -42,8 +43,17 @@ class AuthController extends Controller
 
         // Tenta autenticar o usuário.
         if (Auth::attempt($credentials)) {
-            event(new UserLoggedIn(Auth::user())); // Dispara o evento UserLoggedIn
-            return redirect()->route('dashboard');
+
+            // Verifica se o usuário está ativo.
+            if (Auth::user()->status == 'Ativo') {
+                event(new UserLoggedIn(Auth::user())); // Dispara o evento UserLoggedIn
+                return redirect()->route('dashboard');
+            } else {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'status' => 'Usuário desativado. Entre em contato com o administrador.',
+                ]);
+            }
         }
 
         // Redireciona de volta com mensagens de erro, se a autenticação falhar.
@@ -52,22 +62,22 @@ class AuthController extends Controller
         ]);
     }
 
+    // Faz logout do usuário e redireciona para o login.
     public function logout()
     {
-        // Faz logout do usuário e redireciona para o login.
         Auth::logout();
         return redirect()->route('login');
     }
 
+    // Exibe a página de permissão negada.
     public function permissionDenied()
     {
-        // Exibe a página de permissão negada.
         return view('permission-denied');
     }
 
+    // Redireciona para a página de login.
     public function redirect()
     {
-        // Redireciona para a página de login.
         return redirect()->route('login');
     }
 }

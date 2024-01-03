@@ -27,18 +27,18 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::resource('usuarios', UsuariosController::class);
 
     Route::prefix('usuarios')->name('usuarios.')->group(function () {
-        // Rota personalizada para alterar senha
-        Route::put('changePassword/{id}', [UsuariosController::class, 'changePassword'])->name('changePassword');
-
-        // Rota personalizada para exclusão múltipla
+        // Rota para exclusão múltipla
         Route::post('multi-delete', [UsuariosController::class, 'multiDelete'])->name('multi-delete');
+        // Rotas para atualização de e-mail e senha
+        Route::patch('update-email/{id}', [UsuariosController::class, 'changeEmail'])->name('update-email');
+        Route::patch('update-password/{id}', [UsuariosController::class, 'changePassword'])->name('update-password');
     });
 
     /* Rotas dos clientes */
     Route::resource('clientes', ClientesController::class);
 
     Route::prefix('clientes')->name('clientes.')->group(function () {
-        // Rota personalizada para exclusão múltipla
+        // Rota para exclusão múltipla
         Route::post('multi-delete', [ClientesController::class, 'multiDelete'])->name('multi-delete');
     });
 
@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::resource('ideias', IdeiasController::class);
 
     Route::prefix('ideias')->name('ideias.')->group(function () {
-        // Rota personalizada para exclusão múltipla
+        // Rota para exclusão múltipla
         Route::post('multi-delete', [IdeiasController::class, 'multiDelete'])->name('multi-delete');
         Route::get('images/{id}', [IdeiasController::class, 'createImages'])->name('images');
         Route::get('/download-imagem/{id}', [IdeiasController::class, 'download'])->name('imagem.download');

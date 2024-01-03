@@ -11,6 +11,6 @@ class ImagemIdeias extends Model
 
     public function ideias()
     {
-        return $this->belongsTo(Ideias::class, 'ideias_id', 'id');
+        return $this->belongsTo(Ideia::class, 'ideias_id', 'id');
     }
 }

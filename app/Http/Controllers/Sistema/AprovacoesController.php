@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Sistema;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Aprovacao;
-use App\Models\Ideias;
+use App\Models\Ideia;
 
 class AprovacoesController extends Controller
 {
@@ -13,7 +13,7 @@ class AprovacoesController extends Controller
     protected $aprovacao;
     protected $ideia;
 
-    public function __construct(Aprovacao $aprovacao, Ideias $ideia)
+    public function __construct(Aprovacao $aprovacao, Ideia $ideia)
     {
         $this->aprovacao = $aprovacao;
         $this->ideia = $ideia;
