@@ -38,6 +38,12 @@
                                 @endforeach
                             @endif
 
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
                             <div class="fv-row mb-8">
                                 <input type="text" placeholder="Email ou Username" name="login" autocomplete="off"
                                     class="form-control bg-transparent" />
@@ -50,7 +56,7 @@
 
                             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
-                                <a href="#" class="link-primary">Esqueceu a senha ?</a>
+                                <a href="{{ route('password.forget') }}" class="link-primary">Esqueceu a senha ?</a>
                             </div>
 
                             <div class="d-grid mb-10">

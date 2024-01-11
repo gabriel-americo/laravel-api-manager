@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Sistema;
 
-use App\Events\UserLoggedIn;
 use App\Http\Controllers\Controller;
+use App\Events\UserLoggedIn;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

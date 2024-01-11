@@ -92,82 +92,55 @@
                                         </li>
 
                                         <li class="nav-item mb-3 me-3 me-lg-6">
-                                            <!--begin::Link-->
                                             <a class="nav-link d-flex justify-content-between flex-column flex-center overflow-hidden w-80px h-85px py-4"
                                                 data-bs-toggle="pill" href="#kt_stats_widget_2_tab_3">
-                                                <!--begin::Icon-->
                                                 <div class="nav-icon">
                                                     <img alt="" src="assets/media/svg/products-categories/watch.svg"
                                                         class="" />
                                                 </div>
-                                                <!--end::Icon-->
-                                                <!--begin::Subtitle-->
+
                                                 <span class="nav-text text-gray-600 fw-bold fs-6 lh-1">Watch</span>
-                                                <!--end::Subtitle-->
-                                                <!--begin::Bullet-->
+
                                                 <span
                                                     class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                                                <!--end::Bullet-->
                                             </a>
-                                            <!--end::Link-->
                                         </li>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
+
                                         <li class="nav-item mb-3 me-3 me-lg-6">
-                                            <!--begin::Link-->
                                             <a class="nav-link d-flex justify-content-between flex-column flex-center overflow-hidden w-80px h-85px py-4"
                                                 data-bs-toggle="pill" href="#kt_stats_widget_2_tab_4">
-                                                <!--begin::Icon-->
                                                 <div class="nav-icon">
                                                     <img alt=""
                                                         src="assets/media/svg/products-categories/gloves.svg"
                                                         class="nav-icon" />
                                                 </div>
-                                                <!--end::Icon-->
-                                                <!--begin::Subtitle-->
                                                 <span class="nav-text text-gray-600 fw-bold fs-6 lh-1">Gloves</span>
-                                                <!--end::Subtitle-->
-                                                <!--begin::Bullet-->
+
                                                 <span
                                                     class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                                                <!--end::Bullet-->
                                             </a>
-                                            <!--end::Link-->
                                         </li>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
+
                                         <li class="nav-item mb-3">
-                                            <!--begin::Link-->
                                             <a class="nav-link d-flex justify-content-between flex-column flex-center overflow-hidden w-80px h-85px py-4"
                                                 data-bs-toggle="pill" href="#kt_stats_widget_2_tab_5">
-                                                <!--begin::Icon-->
                                                 <div class="nav-icon">
                                                     <img alt="" src="assets/media/svg/products-categories/shoes.svg"
                                                         class="nav-icon" />
                                                 </div>
-                                                <!--end::Icon-->
-                                                <!--begin::Subtitle-->
+
                                                 <span class="nav-text text-gray-600 fw-bold fs-6 lh-1">Shoes</span>
-                                                <!--end::Subtitle-->
-                                                <!--begin::Bullet-->
+
                                                 <span
                                                     class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-                                                <!--end::Bullet-->
                                             </a>
-                                            <!--end::Link-->
                                         </li>
-                                        <!--end::Item-->
                                     </ul>
-                                    <!--end::Nav-->
-                                    <!--begin::Tab Content-->
+
                                     <div class="tab-content">
-                                        <!--begin::Tap pane-->
                                         <div class="tab-pane fade show active" id="kt_stats_widget_2_tab_1">
-                                            <!--begin::Table container-->
                                             <div class="table-responsive">
-                                                <!--begin::Table-->
                                                 <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
-                                                    <!--begin::Table head-->
                                                     <thead>
                                                         <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
                                                             <th class="ps-0 w-50px">ITEM</th>
@@ -177,8 +150,7 @@
                                                             <th class="pe-0 text-end min-w-100px">TOTAL PRICE</th>
                                                         </tr>
                                                     </thead>
-                                                    <!--end::Table head-->
-                                                    <!--begin::Table body-->
+
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -546,9 +518,7 @@
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                    <!--end::Table body-->
                                                 </table>
-                                                <!--end::Table-->
                                             </div>
                                         </div>
 

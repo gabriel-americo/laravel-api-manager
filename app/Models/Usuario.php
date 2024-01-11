@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class Usuario extends Authenticatable
 {
     use Notifiable;
-
-    protected $table = 'usuarios';
 
     protected $fillable = [
         'nome', 'user', 'email', 'sexo', 'imagem', 'ultimo_login', 'password', 'tipo', 'status',
@@ -25,7 +24,7 @@ class Usuario extends Authenticatable
     ];
 
     // Definindo o relacionamento muitos-para-muitos com o modelo Role
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'roles_usuarios', 'usuarios_id', 'roles_id');
     }
@@ -39,6 +38,6 @@ class Usuario extends Authenticatable
     // Acessor para o atributo 'status', retorna 'Ativo' se for 1, senão 'Desativado'
     public function getStatusAttribute($value)
     {
-        return $value ? 'Ativo' : 'Desativado';
+        return $value === 1 ? 'Ativo' : 'Desativado';
     }
 }

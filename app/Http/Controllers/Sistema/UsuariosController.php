@@ -8,7 +8,6 @@ use App\Models\Usuario;
 use App\Models\Role;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -41,21 +40,11 @@ class UsuariosController extends Controller
     // Função para armazenar um novo usuário no banco de dados
     public function store(UsuariosRequest $request)
     {
-        $data = [
-            'nome' => $request->input('nome'),
-            'user' => $request->input('user'),
-            'email' => $request->input('email'),
-            'sexo' => $request->input('sexo'),
-            'password' => $request->input('password'),
-            'status' => $request->has('status') ? '1' : '0',
-        ];
+        $data = $request->validated();
+        $data['status'] = $request->has('status') ? '1' : '0';
+        $data['password'] = Hash::make($request->input('password'));
 
-        if ($request->hasFile('imagem')) {
-            $path = 'public/img/usuarios/';
-            $imageName = uniqid() . '-' . str_replace(" ", "-", trim($request->imagem->getClientOriginalName()));
-            $request->imagem->storeAs($path, $imageName);
-            $data['imagem'] = $imageName;
-        }
+        $this->processImage($request, $data); // Chama a função para processar a imagem
 
         try {
             $usuarios = $this->usuario->create($data);
@@ -90,27 +79,11 @@ class UsuariosController extends Controller
     // Função para atualizar as informações de um usuário no banco de dados
     public function update(Request $request, $id)
     {
-        $data = [
-            'nome' => $request->input('nome'),
-            'user' => $request->input('user'),
-            'sexo' => $request->input('sexo'),
-            'status' => $request->has('status') ? '1' : '0',
-        ];
+        $data = $request->only(['nome', 'user', 'sexo', 'status']);
 
         $usuarios = $this->usuario->findOrFail($id);
 
-        if ($request->hasFile('imagem')) {
-            $path = 'public/img/usuarios/';
-
-            // Excluir a imagem antiga do servidor
-            if ($usuarios->imagem !== null) {
-                File::delete(public_path('storage/img/usuarios/' . $usuarios->imagem));
-            }
-
-            $imageName = uniqid() . '-' . str_replace(" ", "-", trim($request->imagem->getClientOriginalName()));
-            $request->imagem->storeAs($path, $imageName);
-            $data['imagem'] = $imageName;
-        }
+        $this->processImage($request, $data, $id);
 
         try {
             $usuarios->fill($data)->save();
@@ -130,6 +103,7 @@ class UsuariosController extends Controller
         try {
             $usuario = $this->usuario->findOrFail($id);
 
+            // Deleta a imagem antiga do servidor se existir
             if ($usuario->imagem !== null) {
                 File::delete(public_path('storage/img/usuarios/' . $usuario->imagem));
             }
@@ -141,6 +115,24 @@ class UsuariosController extends Controller
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
             return redirect()->back();
+        }
+    }
+
+    // Função para processar e armazena a imagem do usuário
+    private function processImage(Request $request, array &$data, $id = null)
+    {
+        if ($request->hasFile('imagem')) {
+            $path = 'public/img/usuarios/';
+            $usuarios = $id ? $this->usuario->find($id) : null;
+
+            // Deleta a imagem antiga do servidor se existir
+            if ($usuarios && $usuarios->imagem !== null) {
+                File::delete(public_path('storage/img/usuarios/' . $usuarios->imagem));
+            }
+
+            $imageName = uniqid() . '-' . str_replace(" ", "-", trim($request->imagem->getClientOriginalName()));
+            $request->imagem->storeAs($path, $imageName);
+            $data['imagem'] = $imageName;
         }
     }
 

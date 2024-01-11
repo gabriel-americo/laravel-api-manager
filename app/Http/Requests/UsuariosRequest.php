@@ -18,6 +18,7 @@ class UsuariosRequest extends FormRequest
             'nome'        => 'required|min:3',
             'user'        => 'required|min:3|unique:usuarios',
             'email'       => 'required|email|unique:usuarios',
+            'sexo'        => 'required',
             'password'    => 'required|min:6',
             'roles'       => 'required',
         ];
@@ -28,6 +29,7 @@ class UsuariosRequest extends FormRequest
                 'nome'     => 'required|min:3',
                 'roles'    => 'required',
                 'user'     => 'required|min:3',
+                'sexo'     => 'nullable',
             ];
         }*/
 

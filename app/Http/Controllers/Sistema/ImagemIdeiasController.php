@@ -15,7 +15,7 @@ class ImagemIdeiasController extends Controller
     protected $ideia;
     protected $imagemIdeia;
 
-    public function __construct(Ideias $ideia, ImagemIdeias $imagemIdeia)
+    public function __construct(Ideia $ideia, ImagemIdeias $imagemIdeia)
     {
         $this->ideia = $ideia;
         $this->imagemIdeia = $imagemIdeia;
@@ -23,7 +23,7 @@ class ImagemIdeiasController extends Controller
 
     public function createImages($id)
     {
-        $ideia = Ideias::findOrFail($id);
+        $ideia = Ideia::findOrFail($id);
         $imagemIdeia = ImagemIdeias::where('ideias_id',$id)->get();
 
         return view('sistema.ideias.imagem-ideias.create', compact('ideia', 'imagemIdeia'));

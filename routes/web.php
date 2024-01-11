@@ -1,9 +1,8 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Sistema\AuthController;
+use App\Http\Controllers\Sistema\PasswordResetController;
 use App\Http\Controllers\Sistema\UsuariosController;
 use App\Http\Controllers\Sistema\ClientesController;
 use App\Http\Controllers\Sistema\IdeiasController;
@@ -11,11 +10,20 @@ use App\Http\Controllers\Sistema\AprovacoesController;
 use App\Http\Controllers\Sistema\ProdutosController;
 
 /* Login */
+
 Route::group(['prefix' => '/', 'namespace' => 'Sistema'], function () {
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login']);
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/', [AuthController::class, 'redirect'])->name('/');
+
+    // Rotas para resetar a senha
+    Route::group(['prefix' => 'password'], function () {
+        Route::get('/forget', [PasswordResetController::class, 'showForgetForm'])->name('password.forget');
+        Route::post('/forget', [PasswordResetController::class, 'postForgetForm'])->name('password.post');
+        Route::get('/reset/{token}', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
+        Route::post('/reset', [PasswordResetController::class, 'resetPasswordPost'])->name('password.reset.post');
+    });
 });
 
 /* Rotas do Sistema */
