@@ -21,7 +21,7 @@ class CreateEnderecoEnviosTable extends Migration
             $table->string('cep_envios', 20)->nullable();
             $table->string('pais_envios', 60)->nullable();
             $table->string('estado_envios', 50)->nullable();
-            $table->foreignId('clientes_id')->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

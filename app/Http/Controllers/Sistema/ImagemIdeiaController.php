@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class ImagemIdeiasController extends Controller
+class ImagemIdeiaController extends Controller
 {
     protected $ideia;
     protected $imagemIdeia;

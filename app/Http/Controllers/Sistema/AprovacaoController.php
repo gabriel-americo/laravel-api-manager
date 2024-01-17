@@ -7,9 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Aprovacao;
 use App\Models\Ideia;
 
-class AprovacoesController extends Controller
+class AprovacaoController extends Controller
 {
-
     protected $aprovacao;
     protected $ideia;
 

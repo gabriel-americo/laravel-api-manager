@@ -13,7 +13,7 @@ class CreateImagemIdeiasTable extends Migration
             $table->string('legenda', 150)->nullable();
             $table->string('imagem', 150);
             $table->unsignedBigInteger('ideias_id');
-            $table->foreignId('ideias_id')->constrained('ideias')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('ideia_id')->constrained('ideias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Cliente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EnderecoEnvios>
  */
-class EnderecoEnviosFactory extends Factory
+class EnderecoEnvioFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -28,6 +29,9 @@ class EnderecoEnviosFactory extends Factory
             'cep_envios' => $this->faker->postcode,
             'pais_envios' => $this->faker->country,
             'estado_envios' => $this->faker->state,
+            'cliente_id' => function () {
+                return Cliente::factory()->create()->id;
+            },
         ];
     }
 }

@@ -13,8 +13,8 @@ class CreateRespostasTable extends Migration
             $table->bigIncrements('id');
             $table->longText('resposta');
             $table->date('data')->nullable();
-            $table->foreignId('alteracao_id')->constrained('alteracao')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('usuarios_id')->constrained('usuarios')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('alteracao_id')->constrained('alteracoes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

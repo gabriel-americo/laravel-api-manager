@@ -68,7 +68,7 @@
                         <h1 class="text-dark mb-10">Imagens da Ideia</h1>
 
                         <div class="row g-10">
-                            @foreach ($ideia->images as $image)
+                            @foreach ($ideia->image as $image)
                                 <div class="col-md-4">
                                     <div class="card-xl-stretch me-md-6">
                                         <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"

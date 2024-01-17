@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as Controller;
 use Illuminate\Support\Facades\Storage;
 
-class IdeiasController extends Controller
+class IdeiaController extends Controller
 {
     protected $ideias;
 
@@ -74,14 +74,14 @@ class IdeiasController extends Controller
 
     public function show($id)
     {
-        $ideias = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
+        $ideias = $this->ideias->with('aprovacao', 'image', 'pergunta')->findOrFail($id);
 
         return view('sistema.ideias.show', compact('ideias'));
     }
 
     public function edit($id)
     {
-        $ideia = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
+        $ideia = $this->ideias->with('aprovacao', 'image', 'pergunta')->findOrFail($id);
         $count = $ideia->perguntas()->count();
 
         $checked = ($ideia['status'] == 'Ativa' ? 'checked="checked"' : '');
@@ -100,7 +100,7 @@ class IdeiasController extends Controller
             $ideia->update($data);
 
             foreach ($request->grupo_perguntas as $i => $values) {
-                $idPergunta = PerguntaIdeia::where('ideias_id', $id)->pluck('id')->toArray();
+                $idPergunta = PerguntaIdeia::where('ideia_id', $id)->pluck('id')->toArray();
 
                 if (empty($idPergunta[$i])) {
                     $ideia->perguntas()->create(['perguntas' => $values['pergunta'], 'respostas' => $values['resposta'], 'usuarios_id' => $user_id]);
@@ -122,8 +122,8 @@ class IdeiasController extends Controller
     public function destroy($id)
     {
         $ideia = $this->ideias->findOrFail($id);
-        $imagemId = ImagemIdeia::where('ideias_id', $id);
-        $perguntasId = PerguntasIdeia::where('ideias_id', $id);
+        $imagemId = ImagemIdeia::where('ideia_id', $id);
+        $perguntasId = PerguntaIdeia::where('ideia_id', $id);
 
         try {
             $ideia->delete();
@@ -163,7 +163,7 @@ class IdeiasController extends Controller
 
     public function createImages($id)
     {
-        $ideia = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
+        $ideia = $this->ideias->with('aprovacao', 'image', 'pergunta')->findOrFail($id);
 
         return view('sistema.ideias.images', compact('ideia'));
     }

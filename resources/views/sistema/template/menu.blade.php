@@ -39,6 +39,7 @@
                         </a>
                     </div>
 
+                    @can('admin')
                     <div data-kt-menu-trigger="click" class="menu-item {{ Request::is('clientes*') ? 'here show' : '' }} menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
@@ -68,6 +69,7 @@
                             </div>
                         </div>
                     </div>
+                    @endcan
 
                     <div class="menu-item pt-5">
                         <div class="menu-content">
@@ -135,6 +137,7 @@
                         </div>
                     </div>
 
+                    @can('admin')
                     <div class="menu-item pt-5">
                         <div class="menu-content">
                             <span class="menu-heading fw-bold text-uppercase fs-7">Financeiro</span>
@@ -355,8 +358,7 @@
                             </div>
                         </div>
                     </div>
-
-
+                    @endcan
                 </div>
             </div>
         </div>

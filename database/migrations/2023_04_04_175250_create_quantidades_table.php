@@ -12,8 +12,8 @@ class CreateQuantidadesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('qtd_feita');
             $table->integer('qtd_estoque');
-            $table->foreignId('produtos_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('tamanhos_id')->constrained('tamanhos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tamanho_id')->constrained('tamanhos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

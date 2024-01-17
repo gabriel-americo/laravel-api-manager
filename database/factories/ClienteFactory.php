@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cliente>
@@ -23,7 +24,7 @@ class ClienteFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'site' => $this->faker->url,
             'imagem' => $this->faker->imageUrl(),
-            'password' => bcrypt('password'),
+            'password' => Hash::make('123456'),
             'status' => $this->faker->randomElement([1, 0]),
         ];
     }

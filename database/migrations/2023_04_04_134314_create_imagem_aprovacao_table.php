@@ -12,7 +12,7 @@ class CreateImagemAprovacaoTable extends Migration
             $table->bigIncrements('id');
             $table->string('legenda', 80)->nullable();
             $table->string('imagem', 150);
-            $table->foreignId('aprovacao_id')->constrained('aprovacao')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('aprovacao_id')->constrained('aprovacoes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

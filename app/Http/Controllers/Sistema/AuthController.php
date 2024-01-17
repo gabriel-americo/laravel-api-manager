@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
 use App\Events\UserLoggedIn;
-
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -43,24 +44,26 @@ class AuthController extends Controller
         ];
 
         // Tenta autenticar o usuário.
-        if (Auth::attempt($credentials)) {
-
-            // Verifica se o usuário está ativo.
-            if (Auth::user()->status == 'Ativo') {
-                event(new UserLoggedIn(Auth::user())); // Dispara o evento UserLoggedIn
-                return redirect()->route('dashboard');
-            } else {
-                Auth::logout();
-                return redirect()->route('login')->withErrors([
-                    'status' => 'Usuário desativado. Entre em contato com o administrador.',
-                ]);
-            }
+        if (!Auth::attempt($credentials)) {
+            // Redireciona de volta com mensagens de erro, se a autenticação falhar.
+            return redirect()->back()->withInput()->withErrors([
+                'Os dados informados não conferem!'
+            ]);
         }
 
-        // Redireciona de volta com mensagens de erro, se a autenticação falhar.
-        return redirect()->back()->withInput()->withErrors([
-            'Os dados informados não conferem!'
-        ]);
+        // Verifica se o usuário está ativo.
+        if (!Auth::check() || Auth::user()->status !== 'Ativo') {
+            Auth::logout();
+            return redirect()->route('login')->withErrors([
+                'status' => 'Usuário desativado. Entre em contato com o administrador.',
+            ]);
+        }
+
+        // Dispara o evento UserLoggedIn
+        event(new UserLoggedIn(Auth::user()));
+
+        // Redireciona para o dashboard.
+        return redirect()->route('dashboard');
     }
 
     // Faz logout do usuário e redireciona para o login.

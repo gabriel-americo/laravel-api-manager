@@ -3,19 +3,19 @@
 namespace Database\Seeders;
 
 use App\Models\Cliente;
-use App\Models\EnderecoCobrancas;
-use App\Models\EnderecoEnvios;
+use App\Models\EnderecoCobranca;
+use App\Models\EnderecoEnvio;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(UsuariosRolesSeeder::class);
+        $this->call(UsuarioRoleSeeder::class);
 
         Cliente::factory()
-           ->has(EnderecoCobrancas::factory())
-           ->has(EnderecoEnvios::factory())
+           ->has(EnderecoCobranca::factory())
+           ->has(EnderecoEnvio::factory())
            ->count(10)
            ->create();
     }

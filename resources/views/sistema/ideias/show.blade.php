@@ -74,7 +74,7 @@
                             <h1 class="text-dark mb-10">Perguntas e Respostas</h1>
 
                             <div class="mb-10">
-                                @foreach ($ideias->perguntas as $pergunta)
+                                @foreach ($ideias->pergunta as $pergunta)
                                     <div class="d-flex mb-10">
                                         <i class="bi bi-question-circle fs-2x me-5 ms-n1 mt-2"></i>
 
@@ -97,7 +97,7 @@
                             <h1 class="text-dark mb-10">Imagens da Ideia</h1>
 
                             <div class="row g-10">
-                                @foreach ($ideias->images as $image)
+                                @foreach ($ideias->image as $image)
                                     <div class="col-md-4">
                                         <div class="card-xl-stretch me-md-6">
                                             <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"

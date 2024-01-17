@@ -30,7 +30,7 @@ class CreateEnderecoCobrancasTable extends Migration
             $table->string('email_cobrancas')->nullable();
             $table->string('site_cobrancas')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('clientes_id')->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

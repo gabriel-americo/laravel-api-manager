@@ -5,8 +5,9 @@ namespace Database\Seeders;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-class UsuariosRolesSeeder extends Seeder
+class UsuarioRoleSeeder extends Seeder
 {
     public function run(): void
     {
@@ -14,7 +15,7 @@ class UsuariosRolesSeeder extends Seeder
         //DB::table('roles_usuarios')->truncate();
         //DB::table('usuarios')->truncate();
         //DB::table('roles')->truncate();
-   
+
         // Cria as roles
         $adminRole = DB::table('roles')->insertGetId([
             'nome' => 'Admin',
@@ -26,18 +27,17 @@ class UsuariosRolesSeeder extends Seeder
             'descricao' => 'user'
         ]);
 
-        // Cria usuários
+        // Cria os usuários
         $admin = DB::table('usuarios')->insertGetId([
             'nome' => 'Admin',
             'user' => 'admin',
             'email' => 'admin@example.com',
             'sexo' => 'Masculino',
             'imagem' => '',
-            'password' => bcrypt('123456'),
+            'password' => Hash::make('123456'),
             'status' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-
         ]);
 
         $user = DB::table('usuarios')->insertGetId([
@@ -46,21 +46,21 @@ class UsuariosRolesSeeder extends Seeder
             'email' => 'user@example.com',
             'sexo' => 'Feminino',
             'imagem' => '',
-            'password' => bcrypt('123456'),
+            'password' => Hash::make('123456'),
             'status' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         // Associa as roles aos usuários
-        DB::table('roles_usuarios')->insert([
-            'usuarios_id' => $admin,
-            'roles_id' => $adminRole
+        DB::table('role_usuario')->insert([
+            'usuario_id' => $admin,
+            'role_id' => $adminRole
         ]);
 
-        DB::table('roles_usuarios')->insert([
-            'usuarios_id' => $user,
-            'roles_id' => $userRole
+        DB::table('role_usuario')->insert([
+            'usuario_id' => $user,
+            'role_id' => $userRole
         ]);
     }
 }

@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class ClientesController extends Controller
+class ClienteController extends Controller
 {
     protected $cliente;
 

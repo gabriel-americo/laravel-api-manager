@@ -109,7 +109,7 @@
                         <div class="row mb-6">
                             <label class="col-lg-4 col-form-label required fw-semibold fs-6">Senha</label>
                             <div class="col-lg-8 fv-row">
-                                <input type="password" name="password" class="form-control form-control-lg form-control-solid" placeholder="Senha" />
+                                <input type="password" name="password" class="form-control form-control-lg form-control-solid" placeholder="Senha" value="{{ old('password') }}" />
                                 @error('password')
                                 <div class="fv-plugins-message-container invalid-feedback">
                                     {{ $message }}

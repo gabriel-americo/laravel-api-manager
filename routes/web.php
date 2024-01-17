@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Sistema\AuthController;
 use App\Http\Controllers\Sistema\PasswordResetController;
-use App\Http\Controllers\Sistema\UsuariosController;
-use App\Http\Controllers\Sistema\ClientesController;
-use App\Http\Controllers\Sistema\IdeiasController;
-use App\Http\Controllers\Sistema\AprovacoesController;
-use App\Http\Controllers\Sistema\ProdutosController;
+use App\Http\Controllers\Sistema\UsuarioController;
+use App\Http\Controllers\Sistema\ClienteController;
+use App\Http\Controllers\Sistema\IdeiaController;
+use App\Http\Controllers\Sistema\AprovacaoController;
+use App\Http\Controllers\Sistema\ProdutoController;
 
 /* Login */
 
@@ -32,40 +32,40 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
     /* Rotas dos usuarios */
-    Route::resource('usuarios', UsuariosController::class);
+    Route::resource('usuarios', UsuarioController::class);
 
     Route::prefix('usuarios')->name('usuarios.')->group(function () {
         // Rota para exclusão múltipla
-        Route::post('multi-delete', [UsuariosController::class, 'multiDelete'])->name('multi-delete');
+        Route::post('multi-delete', [UsuarioController::class, 'multiDelete'])->name('multi-delete');
         // Rotas para atualização de e-mail e senha
-        Route::patch('update-email/{id}', [UsuariosController::class, 'changeEmail'])->name('update-email');
-        Route::patch('update-password/{id}', [UsuariosController::class, 'changePassword'])->name('update-password');
+        Route::patch('update-email/{id}', [UsuarioController::class, 'changeEmail'])->name('update-email');
+        Route::patch('update-password/{id}', [UsuarioController::class, 'changePassword'])->name('update-password');
     });
 
     /* Rotas dos clientes */
-    Route::resource('clientes', ClientesController::class);
+    Route::resource('clientes', ClienteController::class)->middleware('can:admin');
 
     Route::prefix('clientes')->name('clientes.')->group(function () {
         // Rota para exclusão múltipla
-        Route::post('multi-delete', [ClientesController::class, 'multiDelete'])->name('multi-delete');
+        Route::post('multi-delete', [ClienteController::class, 'multiDelete'])->name('multi-delete')->middleware('can:admin');
     });
 
     /* Rotas das ideias */
-    Route::resource('ideias', IdeiasController::class);
+    Route::resource('ideias', IdeiaController::class);
 
     Route::prefix('ideias')->name('ideias.')->group(function () {
         // Rota para exclusão múltipla
-        Route::post('multi-delete', [IdeiasController::class, 'multiDelete'])->name('multi-delete');
-        Route::get('images/{id}', [IdeiasController::class, 'createImages'])->name('images');
-        Route::get('/download-imagem/{id}', [IdeiasController::class, 'download'])->name('imagem.download');
+        Route::post('multi-delete', [IdeiaController::class, 'multiDelete'])->name('multi-delete');
+        Route::get('images/{id}', [IdeiaController::class, 'createImages'])->name('images');
+        Route::get('/download-imagem/{id}', [IdeiaController::class, 'download'])->name('imagem.download');
     });
 
     /* Rotas das aprovações */
-    Route::resource('aprovacoes', AprovacoesController::class);
+    Route::resource('aprovacoes', AprovacaoController::class);
 
     /* Rotas para fazer Exportação da tabela PDF */
     //Route::get('/exportar-pdf', 'ExportController@exportarPDF')->name('exportar.pdf');
 
     /* Rotas dos Produtos */
-    //Route::resource('produtos', ProdutosController::class);
+    //Route::resource('produtos', ProdutoController::class);
 });

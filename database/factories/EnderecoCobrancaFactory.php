@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EnderecoCobrancas>
  */
-class EnderecoCobrancasFactory extends Factory
+class EnderecoCobrancaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -36,7 +36,7 @@ class EnderecoCobrancasFactory extends Factory
             'telefone_cobrancas' => $this->faker->phoneNumber,
             'celular_cobrancas' => $this->faker->phoneNumber,
             'email_cobrancas' => $this->faker->unique()->safeEmail,
-            'clientes_id' => function () {
+            'cliente_id' => function () {
                 return Cliente::factory()->create()->id;
             },
         ];

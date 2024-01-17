@@ -5,9 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alteracao extends Model
 {
-    protected $table = 'alteracao';
+    protected $table = 'alteracoes';
 
-    protected $fillable = ['correcao', 'data', 'status', 'aprovacao_id', 'usuarios_id'];
+    protected $fillable = ['correcao', 'data', 'status', 'aprovacao_id', 'usuario_id'];
 
     protected $dates = ['data'];
 

@@ -11,16 +11,9 @@ class CreatePedidosImagensTable extends Migration
         Schema::create('pedidos_imagens', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('imagem', 150);
-
-            $table->unsignedBigInteger('pedidos_id');
-
+            $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        Schema::table('pedidos_imagens', function($table) {
-            $table->foreign('pedidos_id')->references('id')->on('pedidos')
-                ->onDelete('cascade')->onUpdade('cascade');
         });
     }
 

@@ -14,8 +14,8 @@ class CreateVendasProdutosTable extends Migration
             $table->integer('qtd');
             $table->float('valor');
             $table->string('desconto');
-            $table->foreignId('produtos_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('vendas_id')->constrained('vendas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('venda_id')->constrained('vendas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

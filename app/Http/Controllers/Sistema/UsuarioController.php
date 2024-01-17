@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-class UsuariosController extends Controller
+class UsuarioController extends Controller
 {
     protected $usuario;
 
@@ -42,7 +42,6 @@ class UsuariosController extends Controller
     {
         $data = $request->validated();
         $data['status'] = $request->has('status') ? '1' : '0';
-        $data['password'] = Hash::make($request->input('password'));
 
         $this->processImage($request, $data); // Chama a função para processar a imagem
 
@@ -171,7 +170,7 @@ class UsuariosController extends Controller
             return redirect()->back();
         }
 
-        $usuario->password = Hash::make($newPassword);
+        $usuario->password = $newPassword;
         $usuario->save();
 
         flash('Senha atualizada com sucesso!')->success();

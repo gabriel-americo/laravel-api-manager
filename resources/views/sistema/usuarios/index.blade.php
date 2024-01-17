@@ -86,9 +86,11 @@
                                         <span class="path2"></span>
                                     </i>Exportar</button>
 
+                                @can('admin')
                                 <a href="{{ route('usuarios.create') }}" type="button" class="btn btn-primary">
                                     <i class="ki-duotone ki-plus fs-2"></i>Novo Registro
                                 </a>
+                                @endcan
                             </div>
 
                             <div class="d-flex justify-content-end align-items-center d-none"
@@ -120,7 +122,7 @@
                                     <th class="min-w-125px">Status</th>
                                     <th class="min-w-125px">Ultimo Login</th>
                                     <th class="min-w-125px">Data de Cadastro</th>
-                                    <th class="text-end min-w-100px">Ações</th>
+                                    @can('admin')<th class="text-end min-w-100px">Ações</th>@endcan
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-semibold">
@@ -167,6 +169,7 @@
                                         </td>
                                         <td>{{ $usuario->created_at ? $usuario->created_at->format('d M Y, g:i a') : 'N/A' }}
                                         </td>
+                                        @can('admin')
                                         <td class="text-end">
                                             <a href="#"
                                                 class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm"
@@ -189,6 +192,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

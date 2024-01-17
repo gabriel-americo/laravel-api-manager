@@ -64,18 +64,18 @@ class Ideia extends Model
         return $diff->days > 0 ? $diff->format('%dd') : $diff->format('%hh');
     }
 
-    public function images()
+    public function image()
     {
-        return $this->hasMany(ImagemIdeias::class, 'ideias_id', 'id');
+        return $this->hasMany(ImagemIdeia::class, 'ideia_id', 'id');
     }
 
-    public function perguntas()
+    public function pergunta()
     {
-        return $this->hasMany(PerguntasIdeia::class, 'ideias_id', 'id');
+        return $this->hasMany(PerguntaIdeia::class, 'ideia_id', 'id');
     }
 
     public function aprovacao()
     {
-        return $this->hasOne(Aprovacao::class, 'ideias_id', 'id');
+        return $this->hasOne(Aprovacao::class, 'ideia_id', 'id');
     }
 }

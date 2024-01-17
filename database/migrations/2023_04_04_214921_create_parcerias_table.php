@@ -15,7 +15,7 @@ class CreateParceriasTable extends Migration
             $table->longText('descricao');
             $table->date('data')->nullable();
             $table->boolean('status');
-            $table->foreignId('tipo_parcerias_id')->constrained('tipo_parcerias')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tipo_parceria_id')->constrained('tipo_parcerias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

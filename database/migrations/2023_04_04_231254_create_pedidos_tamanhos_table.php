@@ -16,16 +16,9 @@ class CreatePedidosTamanhosTable extends Migration
             $table->integer('g')->nullable();
             $table->integer('gg')->nullable();
             $table->integer('xg')->nullable();
-
-            $table->unsignedBigInteger('pedidos_id');
-
+            $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        Schema::table('pedidos_tamanhos', function($table) {
-            $table->foreign('pedidos_id')->references('id')->on('pedidos')
-                ->onDelete('cascade')->onUpdade('cascade');
         });
     }
 

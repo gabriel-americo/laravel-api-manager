@@ -11,22 +11,11 @@ class CreateEstoqueVirgemTable extends Migration
         Schema::create('estoque_virgem', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('qtd');
-
-            $table->unsignedBigInteger('tamanhos_id');
-            $table->unsignedBigInteger('tipo_produtos_id');
-            $table->unsignedBigInteger('cor_camisetas_id');
-
+            $table->foreignId('tamanho_id')->constrained('tamanhos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tipo_produto_id')->constrained('tipo_produtos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('cor_camiseta_id')->constrained('cor_camisetas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        Schema::table('estoque_virgem', function($table) {
-            $table->foreign('tamanhos_id')->references('id')->on('tamanhos')
-                ->onDelete('cascade')->onUpdade('cascade');
-            $table->foreign('tipo_produtos_id')->references('id')->on('tipo_produtos')
-                ->onDelete('cascade')->onUpdade('cascade');
-            $table->foreign('cor_camisetas_id')->references('id')->on('cor_camisetas')
-                ->onDelete('cascade')->onUpdade('cascade');
         });
     }
 

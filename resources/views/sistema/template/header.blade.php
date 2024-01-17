@@ -115,7 +115,7 @@
                         @if(Auth::user()->imagem && File::exists(public_path('storage/img/usuarios/' . Auth::user()->imagem)))
                             <img src="{{ asset('storage/img/usuarios/' . Auth::user()->imagem) }}" alt="{{ Auth::user()->nome }}" class="rounded-3" />
                         @else
-                            <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ $usuario->nome }}" class="w-100" />
+                            <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ Auth::user()->nome }}" class="w-100" />
                         @endif
                     </div>
 
@@ -127,7 +127,7 @@
                                     @if(Auth::user()->imagem && File::exists(public_path('storage/img/usuarios/' . Auth::user()->imagem)))
                                         <img src="{{ asset('storage/img/usuarios/' . Auth::user()->imagem) }}" alt="{{ Auth::user()->nome }}" />
                                     @else
-                                        <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ $usuario->nome }}" class="w-100" />
+                                        <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ Auth::user()->nome }}" class="w-100" />
                                     @endif
                                 </div>
 

@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aprovacao extends Model
 {
-    protected $table='aprovacao';
+    protected $table='aprovacoes';
 
     protected $fillable = ['descricao', 'status', 'ideias_id'];
 
@@ -16,7 +16,7 @@ class Aprovacao extends Model
 
     public function ideias()
     {
-        return $this->belongsTo(Ideia::class, 'ideias_id', 'id');
+        return $this->belongsTo(Ideia::class, 'ideia_id', 'id');
     }
 
     public function images()

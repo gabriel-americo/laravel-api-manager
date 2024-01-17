@@ -12,8 +12,8 @@ class CreateParceriasProdutosTable extends Migration
             $table->bigIncrements('id');
             $table->string('tamanho', 150);
             $table->string('qtd', 50);
-            $table->foreignId('produtos_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('parcerias_id')->constrained('parcerias')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('parceria_id')->constrained('parcerias')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

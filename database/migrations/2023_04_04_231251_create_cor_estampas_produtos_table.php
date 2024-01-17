@@ -8,14 +8,14 @@ class CreateCorEstampasProdutosTable extends Migration
 {
     public function up()
     {
-        Schema::create('cor_estampas_produtos', function (Blueprint $table) {
-            $table->foreignId('produtos_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('cor_estampas_id')->constrained('cor_estampas')->onDelete('cascade')->onUpdate('cascade');
+        Schema::create('cor_estampa_produto', function (Blueprint $table) {
+            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('cor_estampa_id')->constrained('cor_estampas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('cor_estampas_produtos');
+        Schema::dropIfExists('cor_estampa_produto');
     }
 }
