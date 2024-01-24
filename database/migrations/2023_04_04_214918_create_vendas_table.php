@@ -16,8 +16,8 @@ class CreateVendasTable extends Migration
             $table->longText('descricao')->nullable();
             $table->date('data')->nullable();
             $table->boolean('status');
-            $table->foreignId('tipo_venda_id')->constrained('tipo_vendas')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('tipo_pagamento_id')->constrained('tipo_pagamentos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tipo_venda_id')->constrained('tipos_vendas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tipo_pagamento_id')->constrained('tipos_pagamentos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

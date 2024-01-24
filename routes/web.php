@@ -10,7 +10,6 @@ use App\Http\Controllers\Sistema\AprovacaoController;
 use App\Http\Controllers\Sistema\ProdutoController;
 
 /* Login */
-
 Route::group(['prefix' => '/', 'namespace' => 'Sistema'], function () {
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login']);
@@ -56,8 +55,10 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::prefix('ideias')->name('ideias.')->group(function () {
         // Rota para exclusão múltipla
         Route::post('multi-delete', [IdeiaController::class, 'multiDelete'])->name('multi-delete');
+        Route::post('upload-imagens', [IdeiaController::class, 'uploadImages'])->name('imagem-upload');
+        Route::post('create-subtitle', [IdeiaController::class, 'createSubtitleImage'])->name('create-subtitle');
         Route::get('images/{id}', [IdeiaController::class, 'createImages'])->name('images');
-        Route::get('/download-imagem/{id}', [IdeiaController::class, 'download'])->name('imagem.download');
+        Route::get('download-imagem/{id}', [IdeiaController::class, 'download'])->name('imagem-download');
     });
 
     /* Rotas das aprovações */

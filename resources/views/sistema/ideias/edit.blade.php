@@ -127,7 +127,7 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($ideia->perguntas as $pergunta)
+                                            @foreach ($ideia->pergunta as $pergunta)
                                                 <tr>
                                                     <td>
                                                         <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ $pergunta->perguntas }}</textarea>
@@ -158,15 +158,18 @@
                                 <div class="d-flex flex-column flex-wrap fw-bold"
                                     data-kt-customer-table-filter="payment_type">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input" type="radio" name="status" value="0" @if($ideia->status == "Iniciar") checked @endif>
+                                        <input class="form-check-input" type="radio" name="status" value="0"
+                                            @if ($ideia->status == 'Iniciar') checked @endif>
                                         <span class="form-check-label text-gray-600">Iniciar</span>
                                     </label>
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-                                        <input class="form-check-input" type="radio" name="status" value="1" @if($ideia->status == "Em Andamento") checked @endif>
+                                        <input class="form-check-input" type="radio" name="status" value="1"
+                                            @if ($ideia->status == 'Em Andamento') checked @endif>
                                         <span class="form-check-label text-gray-600">Em Andamento</span>
                                     </label>
                                     <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="radio" name="status" value="2" @if($ideia->status == "Concluído") checked @endif>
+                                        <input class="form-check-input" type="radio" name="status" value="2"
+                                            @if ($ideia->status == 'Concluído') checked @endif>
                                         <span class="form-check-label text-gray-600">Concluído</span>
                                     </label>
 
@@ -192,26 +195,22 @@
     <script src="{{ asset('assets/js/custom/apps/subscriptions/add/advanced.js') }}"></script>
 
     <script>
-        var KTCkeditor = function() {
-            var demos = function() {
-                ClassicEditor.create(document.querySelector('#ckeditor'))
-                    .then(editor => {
-                        console.log(editor);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+        class KTCkeditor {
+            constructor() {
+                this.editor = null;
+                this.init();
             }
 
-            return {
-                init: function() {
-                    demos();
+            async init() {
+                try {
+                    this.editor = await ClassicEditor.create(document.querySelector('#ckeditor'));
+                    console.log(this.editor);
+                } catch (error) {
+                    console.error(error);
                 }
-            };
-        }();
+            }
+        }
 
-        jQuery(document).ready(function() {
-            KTCkeditor.init();
-        });
+        $(document).ready(() => new KTCkeditor());
     </script>
 @endsection

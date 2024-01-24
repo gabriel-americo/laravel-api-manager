@@ -600,46 +600,29 @@
 @section('ajax-status')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#cep_cobrancas').on('input', function() {
-                var cep = $(this).val().replace(/\D/g, '');
+            const cepFields = ['#cep_cobrancas', '#cep_envios'];
 
-                if (cep.length === 8) {
-                    $.ajax({
-                        url: 'https://viacep.com.br/ws/' + cep + '/json/',
-                        type: 'GET',
-                        success: function(response) {
-                            $('#rua_cobrancas').val(response.logradouro);
-                            $('#cidade_cobrancas').val(response.localidade);
-                            $('#estado_cobrancas').val(response.uf);
-                            $('#bairro_cobrancas').val(response.bairro);
-                            $('#estado_cobrancas').val(response.uf);
-                        },
-                        error: function() {
-                            alert('CEP não encontrado.');
-                        }
-                    });
-                }
-            });
+            cepFields.forEach(field => {
+                $(field).on('input', function() {
+                    const cep = $(this).val().replace(/\D/g, '');
 
-            $('#cep_envios').on('input', function() {
-                var cep = $(this).val().replace(/\D/g, '');
-
-                if (cep.length === 8) {
-                    $.ajax({
-                        url: 'https://viacep.com.br/ws/' + cep + '/json/',
-                        type: 'GET',
-                        success: function(response) {
-                            $('#rua_envios').val(response.logradouro);
-                            $('#cidade_envios').val(response.localidade);
-                            $('#estado_envios').val(response.uf);
-                            $('#bairro_envios').val(response.bairro);
-                            $('#estado_envios').val(response.uf);
-                        },
-                        error: function() {
-                            alert('CEP não encontrado.');
-                        }
-                    });
-                }
+                    if (cep.length === 8) {
+                        $.ajax({
+                            url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                            type: 'GET',
+                            success: function(response) {
+                                $(field.replace('cep', 'rua')).val(response.logradouro);
+                                $(field.replace('cep', 'cidade')).val(response
+                                    .localidade);
+                                $(field.replace('cep', 'estado')).val(response.uf);
+                                $(field.replace('cep', 'bairro')).val(response.bairro);
+                            },
+                            error: function() {
+                                alert('CEP não encontrado.');
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

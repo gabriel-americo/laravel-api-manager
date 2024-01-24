@@ -4,13 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoParceriasTable extends Migration
+class CreateCoresEstampasTable extends Migration
 {
     public function up()
     {
-        Schema::create('tipo_parcerias', function (Blueprint $table) {
+        Schema::create('cores_estampas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tipo', 80);
+            $table->string('cor', 50);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -18,6 +18,6 @@ class CreateTipoParceriasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('tipo_parcerias');
+        Schema::dropIfExists('cores_estampas');
     }
 }

@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImagemAprovacaoTable extends Migration
+class CreateImagensAprovacoesTable extends Migration
 {
     public function up()
     {
-        Schema::create('imagem_aprovacao', function (Blueprint $table) {
+        Schema::create('imagens_aprovacoes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('legenda', 80)->nullable();
             $table->string('imagem', 150);
@@ -20,6 +20,6 @@ class CreateImagemAprovacaoTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('imagem_aprovacao');
+        Schema::dropIfExists('imagens_aprovacoes');
     }
 }

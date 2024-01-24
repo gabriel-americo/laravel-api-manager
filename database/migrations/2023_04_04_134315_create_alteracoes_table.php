@@ -21,6 +21,6 @@ class CreateAlteracoesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('alteracao');
+        Schema::dropIfExists('alteracoes');
     }
 }

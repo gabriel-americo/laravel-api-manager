@@ -56,9 +56,9 @@ class IdeiaController extends Controller
 
             foreach ($request->grupo_perguntas as $values) {
                 $ideia->perguntas()->create([
-                    'perguntas' => $values['pergunta'],
-                    'respostas' => $values['resposta'],
-                    'usuarios_id' => $data['criador']
+                    'pergunta' => $values['pergunta'],
+                    'resposta' => $values['resposta'],
+                    'usuario_id' => $data['criador']
                 ]);
             }
 
@@ -74,14 +74,14 @@ class IdeiaController extends Controller
 
     public function show($id)
     {
-        $ideias = $this->ideias->with('aprovacao', 'image', 'pergunta')->findOrFail($id);
+        $ideias = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
 
         return view('sistema.ideias.show', compact('ideias'));
     }
 
     public function edit($id)
     {
-        $ideia = $this->ideias->with('aprovacao', 'image', 'pergunta')->findOrFail($id);
+        $ideia = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
         $count = $ideia->perguntas()->count();
 
         $checked = ($ideia['status'] == 'Ativa' ? 'checked="checked"' : '');
@@ -103,9 +103,9 @@ class IdeiaController extends Controller
                 $idPergunta = PerguntaIdeia::where('ideia_id', $id)->pluck('id')->toArray();
 
                 if (empty($idPergunta[$i])) {
-                    $ideia->perguntas()->create(['perguntas' => $values['pergunta'], 'respostas' => $values['resposta'], 'usuarios_id' => $user_id]);
+                    $ideia->perguntas()->create(['pergunta' => $values['pergunta'], 'resposta' => $values['resposta'], 'usuarios_id' => $user_id]);
                 } else {
-                    $ideia->perguntas()->where('id', $idPergunta[$i])->update(['perguntas' => $values['pergunta'], 'respostas' => $values['resposta']]);
+                    $ideia->perguntas()->where('id', $idPergunta[$i])->update(['pergunta' => $values['pergunta'], 'resposta' => $values['resposta']]);
                 }
             }
 
@@ -163,7 +163,7 @@ class IdeiaController extends Controller
 
     public function createImages($id)
     {
-        $ideia = $this->ideias->with('aprovacao', 'image', 'pergunta')->findOrFail($id);
+        $ideia = $this->ideias->with('aprovacao', 'images', 'perguntas')->findOrFail($id);
 
         return view('sistema.ideias.images', compact('ideia'));
     }
@@ -172,27 +172,32 @@ class IdeiaController extends Controller
     {
         $request->validate([
             'ideia_id' => 'required|exists:ideias,id',
-            'imageFile' => 'required|array',
-            'imageFile.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
+            'imageFile.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         try {
             $ideia = $this->ideias->findOrFail($request->ideia_id);
 
-            if ($request->hasFile('imageFile')) {
-                foreach ($request->file('imageFile') as $file) {
-                    $imageName = uniqid() . '-' . trim($file->getClientOriginalName());
-                    $path = $file->storeAs('/img/ideias', $imageName);
-                    $ideia->imagens()->create(['imagem' => $path]);
-                }
-
-                flash('Upload realizado com sucesso!')->success();
-                return redirect()->back();
+            foreach ($request->file('imageFile') as $file) {
+                $path = 'public/img/ideias/';
+                $imageName = uniqid() . '-' . str_replace(" ", "-", trim($file->getClientOriginalName()));
+                $file->storeAs($path, $imageName);
+                $ideia->images()->create(['imagem' => $imageName]);
             }
+
+            return response()->json(['success' => 'Imagem enviada com sucesso.']);
         } catch (\Exception $e) {
-            flash($e->getMessage())->warning();
-            return redirect()->back();
+            return response()->json(['error' => 'Erro ao fazer upload da imagem.']);
         }
+    }
+
+    public function createSubtitleImage(Request $request)
+    {
+        $imagemIdeia = ImagemIdeia::findOrFail($request->idImagem);
+        $imagemIdeia->legenda = $request->legenda;
+        $imagemIdeia->save();
+
+        return response()->json(['success' => 'Legenda atualizada com sucesso.']);
     }
 
     public function multiDelete(Request $request)

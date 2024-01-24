@@ -9,7 +9,7 @@ class CreateRespostasTable extends Migration
 
     public function up()
     {
-        Schema::create('resposta', function (Blueprint $table) {
+        Schema::create('respostas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('resposta');
             $table->date('data')->nullable();
@@ -22,6 +22,6 @@ class CreateRespostasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('resposta');
+        Schema::dropIfExists('respostas');
     }
 }

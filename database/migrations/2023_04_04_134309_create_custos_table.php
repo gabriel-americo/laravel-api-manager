@@ -20,8 +20,8 @@ class CreateCustosTable extends Migration
             $table->date('data_vencimento')->nullable();
             $table->boolean('status');
             $table->foreignId('fornecedor_id')->constrained('fornecedores')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('tipo_custo_id')->constrained('tipo_custos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('tipo_subcategoria_custo_id')->constrained('tipo_subcategoria_custos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tipo_custo_id')->constrained('tipos_custos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tipo_subcategoria_custo_id')->constrained('tipos_subcategorias_custos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

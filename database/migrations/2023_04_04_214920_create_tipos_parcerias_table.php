@@ -4,13 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCorCamisetasTable extends Migration
+class CreateTiposParceriasTable extends Migration
 {
     public function up()
     {
-        Schema::create('cor_camisetas', function (Blueprint $table) {
+        Schema::create('tipos_parcerias', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('cor', 80);
+            $table->string('tipo', 80);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -18,6 +18,6 @@ class CreateCorCamisetasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('cor_camisetas');
+        Schema::dropIfExists('tipos_parcerias');
     }
 }

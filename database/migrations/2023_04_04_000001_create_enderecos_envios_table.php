@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnderecoEnviosTable extends Migration
+class CreateEnderecosEnviosTable extends Migration
 {
     public function up()
     {
-        Schema::create('endereco_envios', function (Blueprint $table) {
+        Schema::create('enderecos_envios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome_envios', 50)->nullable();
             $table->string('sobrenome_envios', 50)->nullable();
@@ -29,6 +29,6 @@ class CreateEnderecoEnviosTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('endereco_envios');
+        Schema::dropIfExists('enderecos_envios');
     }
 }

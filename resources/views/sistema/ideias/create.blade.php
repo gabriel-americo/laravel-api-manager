@@ -69,7 +69,7 @@
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label fw-bold fs-6">Descrição</label>
                                 <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                                    <textarea name="descricao" id="ckeditor" class="form-control form-control-solid rounded-3" rows="4"></textarea>
+                                    <textarea name="descricao" id="ckeditor" class="form-control form-control-solid rounded-3" rows="4">{{ old('descricao') }}</textarea>
                                 </div>
                             </div>
 
@@ -192,22 +192,22 @@
     <script src="{{ asset('assets/js/custom/apps/subscriptions/add/advanced.js') }}"></script>
 
     <script>
-        var KTCkeditor = function() {
-            var demos = function() {
-                ClassicEditor.create(document.querySelector('#ckeditor'))
-                    .then(editor => {
-                        console.log(editor);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+        class KTCkeditor {
+            constructor() {
+                this.editor = null;
+                this.init();
             }
 
-            return {
-                init: function() {
-                    demos();
+            async init() {
+                try {
+                    this.editor = await ClassicEditor.create(document.querySelector('#ckeditor'));
+                    console.log(this.editor);
+                } catch (error) {
+                    console.error(error);
                 }
-            };
-        }();
+            }
+        }
+
+        $(document).ready(() => new KTCkeditor());
     </script>
 @endsection

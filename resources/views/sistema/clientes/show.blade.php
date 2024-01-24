@@ -114,14 +114,11 @@
                             <div class="tab-pane fade show active" id="kt_customer_view_overview_tab" role="tabpanel">
                                 <div class="card pt-2 mb-6 mb-xl-9">
                                     <div class="card-header border-0">
-                                        <!--begin::Card title-->
                                         <div class="card-title">
                                             <h2>Invoices</h2>
                                         </div>
-                                        <!--end::Card title-->
-                                        <!--begin::Toolbar-->
+
                                         <div class="card-toolbar m-0">
-                                            <!--begin::Tab nav-->
                                             <ul class="nav nav-stretch fs-5 fw-semibold nav-line-tabs nav-line-tabs-2x border-transparent"
                                                 role="tablist">
                                                 <li class="nav-item" role="presentation">
@@ -456,13 +453,10 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <!--end::Table-->
                                             </div>
-                                            <!--end::Tab panel-->
-                                            <!--begin::Tab panel-->
+
                                             <div id="kt_customer_details_invoices_3" class="py-0 tab-pane fade"
                                                 role="tabpanel">
-                                                <!--begin::Table-->
                                                 <table id="kt_customer_details_invoices_table_3"
                                                     class="table align-middle table-row-dashed fs-6 fw-bold gy-5">
                                                     <thead
@@ -613,13 +607,10 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <!--end::Table-->
                                             </div>
-                                            <!--end::Tab panel-->
-                                            <!--begin::Tab panel-->
+
                                             <div id="kt_customer_details_invoices_4" class="py-0 tab-pane fade"
                                                 role="tabpanel">
-                                                <!--begin::Table-->
                                                 <table id="kt_customer_details_invoices_table_4"
                                                     class="table align-middle table-row-dashed fs-6 fw-bold gy-5">
                                                     <thead

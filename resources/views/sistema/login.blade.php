@@ -26,7 +26,6 @@
                             @csrf
                             <div class="text-center mb-11">
                                 <h1 class="text-dark fw-bolder mb-3">Sistema de Gerenciamento</h1>
-
                                 <div class="text-gray-500 fw-semibold fs-6">Faça login no Administrador</div>
                             </div>
 

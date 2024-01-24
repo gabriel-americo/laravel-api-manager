@@ -10,8 +10,8 @@ class CreatePerguntasIdeiasTable extends Migration
     {
         Schema::create('perguntas_ideias', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('perguntas');
-            $table->longText('respostas')->nullable();
+            $table->longText('pergunta');
+            $table->longText('resposta')->nullable();
             $table->foreignId('ideia_id')->constrained('ideias')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

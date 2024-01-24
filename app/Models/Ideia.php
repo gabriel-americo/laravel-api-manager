@@ -1,13 +1,14 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Ideia extends Model
 {
-    protected $table='ideias';
-
     protected $fillable = [
         'nome', 'descricao', 'data_inicio', 'data_entrega', 'data_lancamento', 'criador', 'status'
     ];
@@ -17,7 +18,7 @@ class Ideia extends Model
     ];
 
     protected $appends = [
-        'data_entrega_br', 'data_lancamento_br', 'data_inicio_br', 'status_label'
+        'data_entrega_br', 'data_lancamento_br', 'data_inicio_br'
     ];
 
     public function getDataEntregaBrAttribute()
@@ -64,17 +65,17 @@ class Ideia extends Model
         return $diff->days > 0 ? $diff->format('%dd') : $diff->format('%hh');
     }
 
-    public function image()
+    public function images(): HasMany
     {
         return $this->hasMany(ImagemIdeia::class, 'ideia_id', 'id');
     }
 
-    public function pergunta()
+    public function perguntas(): HasMany
     {
         return $this->hasMany(PerguntaIdeia::class, 'ideia_id', 'id');
     }
 
-    public function aprovacao()
+    public function aprovacao(): HasOne
     {
         return $this->hasOne(Aprovacao::class, 'ideia_id', 'id');
     }

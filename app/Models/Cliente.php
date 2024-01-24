@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Hash;
 
 class Cliente extends Authenticatable
@@ -30,20 +31,20 @@ class Cliente extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
-     // Acesso ao status
+    // Acesso ao status
     public function getStatusAttribute()
     {
         return $this->attributes['status'] == 1 ? "Ativo" : "Desativado";
     }
 
     // Relacionamento com EnderecoCobranca
-    public function enderecoCobranca()
+    public function enderecoCobranca(): HasOne
     {
         return $this->hasOne(EnderecoCobranca::class);
     }
 
     // Relacionamento com EnderecoEnvio
-    public function enderecoEnvio()
+    public function enderecoEnvio(): HasOne
     {
         return $this->hasOne(EnderecoEnvio::class);
     }

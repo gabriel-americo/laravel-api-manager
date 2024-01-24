@@ -16,7 +16,7 @@
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="kt_body" class="app-blank bgi-size-cover bgi-position-center bgi-no-repeat">
+<body class="app-blank bgi-size-cover bgi-position-center bgi-no-repeat">
     <div class="d-flex flex-column flex-root">
         <div class="d-flex flex-column flex-center flex-column-fluid">
             <div class="d-flex flex-column flex-center text-center p-10">

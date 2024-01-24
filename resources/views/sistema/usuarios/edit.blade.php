@@ -268,7 +268,8 @@
                                     </div>
                                     <div class="form-text mb-5">A senha deve ter pelo menos 6 caracteres</div>
                                     <div class="d-flex">
-                                        <button type="submit" class="btn btn-primary me-2 px-6" id="btnAtualizarSenha">Atualizar Senha</button>
+                                        <button type="submit" class="btn btn-primary me-2 px-6"
+                                            id="btnAtualizarSenha">Atualizar Senha</button>
                                         <button id="kt_password_cancel" type="button"
                                             class="btn btn-color-gray-400 btn-active-light-primary px-6">Cancelar</button>
                                     </div>
@@ -291,17 +292,20 @@
 @section('ajax-status')
     <script>
         $(document).ready(function() {
-            $('#newpassword, #confirmpassword').on('input', function() {
-                var newPassword = $('#newpassword').val();
-                var confirmPassword = $('#confirmpassword').val();
+            const $newPassword = $('#newpassword');
+            const $confirmPassword = $('#confirmpassword');
+            const $updateButton = $('#btnAtualizarSenha');
 
-                $('#confirmpassword').toggleClass('is-valid', newPassword === confirmPassword);
-                $('#confirmpassword').toggleClass('is-invalid', newPassword !== confirmPassword);
+            $newPassword.add($confirmPassword).on('input', function() {
+                const newPassword = $newPassword.val();
+                const confirmPassword = $confirmPassword.val();
+                const isConfirmPasswordValid = newPassword === confirmPassword;
 
-                var isConfirmPasswordValid = $('#confirmpassword').hasClass('is-valid');
+                $confirmPassword.toggleClass('is-valid', isConfirmPasswordValid);
+                $confirmPassword.toggleClass('is-invalid', !isConfirmPasswordValid);
 
                 // Desabilitar o botão de atualizar se o campo de confirmação de senha não for válido
-                $('#btnAtualizarSenha').prop('disabled', !isConfirmPasswordValid);
+                $updateButton.prop('disabled', !isConfirmPasswordValid);
             });
         });
     </script>

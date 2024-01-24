@@ -26,7 +26,8 @@
                                     <span class="path2"></span>
                                 </i>
                                 <input type="text" data-kt-table-filter="search"
-                                    class="form-control form-control-solid w-250px ps-13" placeholder="Buscar ideia aprovada" />
+                                    class="form-control form-control-solid w-250px ps-13"
+                                    placeholder="Buscar ideia aprovada" />
                             </div>
                         </div>
 
@@ -116,7 +117,10 @@
                                                     value="{{ $aprovacao->id }}" />
                                             </div>
                                         </td>
-                                        <td>{{ $aprovacao->ideias->nome }}</td>
+                                        <td>
+                                            <a class="text-gray-800 text-hover-primary mb-1"
+                                                href="{{ route('aprovacoes.show', $aprovacao->id) }}">{{ $aprovacao->ideia->nome }}</a>
+                                        </td>
                                         <td>
                                             <div
                                                 class="badge {{ $aprovacao->status == 'Sim' ? 'badge-light-success' : 'badge-light-danger' }}">

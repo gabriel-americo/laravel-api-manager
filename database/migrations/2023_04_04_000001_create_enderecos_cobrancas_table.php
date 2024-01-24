@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnderecoCobrancasTable extends Migration
+class CreateEnderecosCobrancasTable extends Migration
 {
     public function up()
     {
-        Schema::create('endereco_cobrancas', function (Blueprint $table) {
+        Schema::create('enderecos_cobrancas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome_cobrancas', 50)->nullable();
             $table->string('sobrenome_cobrancas', 50)->nullable();
@@ -38,6 +38,6 @@ class CreateEnderecoCobrancasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('endereco_cobrancas');
+        Schema::dropIfExists('enderecos_cobrancas');
     }
 }

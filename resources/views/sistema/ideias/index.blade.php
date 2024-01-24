@@ -108,7 +108,7 @@
                                     <th class="min-w-125px">Data da Entrega</th>
                                     <th class="min-w-125px">Data do Lançamento</th>
                                     <th class="min-w-100px">Criador da Arte</th>
-                                    <th class="min-w-95px">Status</th>
+                                    <th class="text-center min-w-95px">Status</th>
                                     <th class="text-center min-w-95px">Imagens</th>
                                     <th class="text-end min-w-100px">Ações</th>
                                 </tr>
@@ -122,17 +122,19 @@
                                                     value="{{ $ideia->id }}" />
                                             </div>
                                         </td>
-                                        <td><a class="text-gray-800 text-hover-primary mb-1" href="{{ route('ideias.show', $ideia->id) }}">{{ $ideia->nome }}</a></td>
+                                        <td><a class="text-gray-800 text-hover-primary mb-1"
+                                                href="{{ route('ideias.show', $ideia->id) }}">{{ $ideia->nome }}</a></td>
                                         <td>{{ $ideia->data_inicio_br }}</td>
                                         <td>{{ $ideia->data_entrega_br }}</td>
                                         <td>{{ $ideia->data_lancamento_br }}</td>
                                         <td>{{ $ideia->criador }}</td>
-                                        <td>
+                                        <td class="text-center">
                                             <div class="{{ $ideia->class }}">
                                                 {{ $ideia->status }}
                                             </div>
                                         </td>
-                                        <td class="text-center"><a href="{{ route('ideias.images', $ideia->id) }}"><i class="bi bi-images fs-1"></i></a></td>
+                                        <td class="text-center"><a href="{{ route('ideias.images', $ideia->id) }}"><i
+                                                    class="bi bi-images fs-1"></i></a></td>
                                         <td class="text-end">
                                             <a href="#"
                                                 class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm"

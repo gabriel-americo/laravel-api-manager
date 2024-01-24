@@ -9,7 +9,7 @@ class PerguntaIdeia extends Model
 {
     protected $table = 'perguntas_ideias';
 
-    protected $fillable = ['perguntas', 'respostas', 'ideia_id', 'usuario_id'];
+    protected $fillable = ['pergunta', 'resposta', 'ideia_id', 'usuario_id'];
 
     public function ideia(): BelongsTo
     {

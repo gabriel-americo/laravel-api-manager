@@ -87,9 +87,9 @@
                                     </i>Exportar</button>
 
                                 @can('admin')
-                                <a href="{{ route('usuarios.create') }}" type="button" class="btn btn-primary">
-                                    <i class="ki-duotone ki-plus fs-2"></i>Novo Registro
-                                </a>
+                                    <a href="{{ route('usuarios.create') }}" type="button" class="btn btn-primary">
+                                        <i class="ki-duotone ki-plus fs-2"></i>Novo Registro
+                                    </a>
                                 @endcan
                             </div>
 
@@ -122,7 +122,9 @@
                                     <th class="min-w-125px">Status</th>
                                     <th class="min-w-125px">Ultimo Login</th>
                                     <th class="min-w-125px">Data de Cadastro</th>
-                                    @can('admin')<th class="text-end min-w-100px">Ações</th>@endcan
+                                    @can('admin')
+                                        <th class="text-end min-w-100px">Ações</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-semibold">
@@ -138,10 +140,12 @@
                                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                 <a href="{{ route('usuarios.show', $usuario->id) }}">
                                                     <div class="symbol-label">
-                                                        @if($usuario->imagem && File::exists(public_path('storage/img/usuarios/' . $usuario->imagem)))
-                                                            <img src="{{ asset('storage/img/usuarios/' . $usuario->imagem) }}" alt="{{ $usuario->nome }}" class="w-100" />
+                                                        @if ($usuario->imagem && File::exists(public_path('storage/img/usuarios/' . $usuario->imagem)))
+                                                            <img src="{{ asset('storage/img/usuarios/' . $usuario->imagem) }}"
+                                                                alt="{{ $usuario->nome }}" class="w-100" />
                                                         @else
-                                                            <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ $usuario->nome }}" class="w-100" />
+                                                            <img src="{{ asset('assets/media/avatars/blank.png') }}"
+                                                                alt="{{ $usuario->nome }}" class="w-100" />
                                                         @endif
                                                     </div>
                                                 </a>
@@ -170,28 +174,28 @@
                                         <td>{{ $usuario->created_at ? $usuario->created_at->format('d M Y, g:i a') : 'N/A' }}
                                         </td>
                                         @can('admin')
-                                        <td class="text-end">
-                                            <a href="#"
-                                                class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm"
-                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Ações
-                                                <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
-                                                data-kt-menu="true">
-                                                <div class="menu-item px-3">
-                                                    <a href="{{ route('usuarios.edit', $usuario->id) }}"
-                                                        class="menu-link px-3">Editar</a>
-                                                </div>
+                                            <td class="text-end">
+                                                <a href="#"
+                                                    class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm"
+                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Ações
+                                                    <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
+                                                    data-kt-menu="true">
+                                                    <div class="menu-item px-3">
+                                                        <a href="{{ route('usuarios.edit', $usuario->id) }}"
+                                                            class="menu-link px-3">Editar</a>
+                                                    </div>
 
-                                                <form class="menu-item px-3 sweetalert-delete"
-                                                    action="{{ route('usuarios.destroy', $usuario->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="menu-link px-3 button-delete"
-                                                        type="submit">Deletar</button>
-                                                </form>
-                                            </div>
-                                        </td>
+                                                    <form class="menu-item px-3 sweetalert-delete"
+                                                        action="{{ route('usuarios.destroy', $usuario->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="menu-link px-3 button-delete"
+                                                            type="submit">Deletar</button>
+                                                    </form>
+                                                </div>
+                                            </td>
                                         @endcan
                                     </tr>
                                 @endforeach

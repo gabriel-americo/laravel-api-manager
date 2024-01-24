@@ -6,7 +6,7 @@ use App\Models\Cliente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EnderecoCobrancas>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EnderecoCobranca>
  */
 class EnderecoCobrancaFactory extends Factory
 {

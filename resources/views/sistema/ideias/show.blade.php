@@ -74,17 +74,17 @@
                             <h1 class="text-dark mb-10">Perguntas e Respostas</h1>
 
                             <div class="mb-10">
-                                @foreach ($ideias->pergunta as $pergunta)
+                                @foreach ($ideias->perguntas as $pergunta)
                                     <div class="d-flex mb-10">
                                         <i class="bi bi-question-circle fs-2x me-5 ms-n1 mt-2"></i>
 
                                         <div class="d-flex flex-column">
                                             <div class="d-flex align-items-center mb-2">
                                                 <span
-                                                    class="text-dark fs-4 me-3 fw-semibold">{{ $pergunta->perguntas }}</span>
+                                                    class="text-dark fs-4 me-3 fw-semibold">{{ $pergunta->pergunta }}</span>
                                             </div>
 
-                                            <span class="text-muted fw-semibold fs-6">{{ $pergunta->respostas }}</span>
+                                            <span class="text-muted fw-semibold fs-6">{{ $pergunta->resposta }}</span>
                                         </div>
                                     </div>
                                 @endforeach
@@ -97,29 +97,31 @@
                             <h1 class="text-dark mb-10">Imagens da Ideia</h1>
 
                             <div class="row g-10">
-                                @foreach ($ideias->image as $image)
+                                @foreach ($ideias->images as $image)
                                     <div class="col-md-4">
                                         <div class="card-xl-stretch me-md-6">
-                                            <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
-                                                href="{{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }}">
-
-                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
+                                            <div class="d-block overlay">
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-200px"
                                                     style="background-image:url({{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }});">
                                                 </div>
 
-                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-                                                    <i class="bi bi-eye fs-2x text-white"></i>
+                                                <div
+                                                    class="overlay-layer card-rounded bg-dark bg-opacity-25 d-flex justify-content-around">
+                                                    <a class="d-flex align-items-center justify-content-center w-50 h-100"
+                                                        data-fslightbox="lightbox-hot-sales"
+                                                        href="{{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }}">
+                                                        <i class="bi bi-eye fs-2x text-white"></i>
+                                                    </a>
+                                                    <a class="d-flex align-items-center justify-content-center w-50 h-100"
+                                                        href="{{ route('ideias.imagem-download', $image->id) }}">
+                                                        <i class="bi bi-download fs-2x text-white"></i>
+                                                    </a>
                                                 </div>
-                                            </a>
+                                            </div>
 
                                             <div class="mt-5">
                                                 <span
                                                     class="fs-4 text-dark fw-bold text-dark lh-base">{{ $image->legenda }}</span>
-
-                                                <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
-                                                    <a href="{{ route('ideias.imagem.download', $image->id) }}"
-                                                        class="btn btn-sm btn-primary">Download</a>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

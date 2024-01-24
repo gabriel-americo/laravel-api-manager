@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoProdutosTable extends Migration
+class CreateTiposPagamentosTable extends Migration
 {
     public function up()
     {
-        Schema::create('tipo_produtos', function (Blueprint $table) {
+        Schema::create('tipos_pagamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tipo', 80);
             $table->timestamps();
@@ -18,6 +18,6 @@ class CreateTipoProdutosTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('tipo_produtos');
+        Schema::dropIfExists('tipos_pagamentos');
     }
 }

@@ -20,6 +20,6 @@ class CreateAprovacoesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('aprovacao');
+        Schema::dropIfExists('aprovacoes');
     }
 }

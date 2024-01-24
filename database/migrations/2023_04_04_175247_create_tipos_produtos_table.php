@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoCustosTable extends Migration
+class CreateTiposProdutosTable extends Migration
 {
     public function up()
     {
-        Schema::create('tipo_custos', function (Blueprint $table) {
+        Schema::create('tipos_produtos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tipo', 80);
             $table->timestamps();
@@ -18,6 +18,6 @@ class CreateTipoCustosTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('tipo_custos');
+        Schema::dropIfExists('tipos_produtos');
     }
 }
