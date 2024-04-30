@@ -1,9 +1,4 @@
-# Use the latest version of PHP
-FROM php:8.2-fpm
-
-# set your user name, ex: user=bernardo
-ARG user=gabriel
-ARG uid=1000
+FROM php:8.3-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -24,10 +19,8 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+# Install node and npm
+RUN apk add --no-cache nodejs npm
 
 # Install redis
 RUN pecl install -o -f redis \
@@ -40,4 +33,4 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
-USER $user
+EXPOSE 9000

@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Ideia extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'nome', 'descricao', 'data_inicio', 'data_entrega', 'data_lancamento', 'criador', 'status'
     ];
@@ -65,14 +68,14 @@ class Ideia extends Model
         return $diff->days > 0 ? $diff->format('%dd') : $diff->format('%hh');
     }
 
-    public function images(): HasMany
+    public function ideiaImagem(): HasMany
     {
-        return $this->hasMany(ImagemIdeia::class, 'ideia_id', 'id');
+        return $this->hasMany(IdeiaImagem::class, 'ideia_id', 'id');
     }
 
-    public function perguntas(): HasMany
+    public function ideiaPergunta(): HasMany
     {
-        return $this->hasMany(PerguntaIdeia::class, 'ideia_id', 'id');
+        return $this->hasMany(IdeiaPergunta::class, 'ideia_id', 'id');
     }
 
     public function aprovacao(): HasOne

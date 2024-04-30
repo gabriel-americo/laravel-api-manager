@@ -19,12 +19,16 @@ class UsuarioRoleSeeder extends Seeder
         // Cria as roles
         $adminRole = DB::table('roles')->insertGetId([
             'nome' => 'Admin',
-            'descricao' => 'admin'
+            'descricao' => 'admin',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         $userRole = DB::table('roles')->insertGetId([
             'nome' => 'User',
-            'descricao' => 'user'
+            'descricao' => 'user',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         // Cria os usuários

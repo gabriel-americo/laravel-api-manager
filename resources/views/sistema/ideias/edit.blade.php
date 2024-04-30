@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         Atualização</h1>
@@ -23,8 +23,8 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid">
+            <div class="app-container container-xxl">
                 <div class="card mb-5 mb-xl-10">
                     <div class="card-header border-0">
                         <div class="card-title m-0">
@@ -96,7 +96,7 @@
                                 <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                     <input type="date" name="data_lancamento"
                                         class="form-control form-control-lg form-control-solid"
-                                        value="{{ $ideia->data_lancamento_br }}">
+                                        value="{{ $ideia->data_lancamento }}">
                                 </div>
                             </div>
 
@@ -127,13 +127,13 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($ideia->pergunta as $pergunta)
+                                            @foreach ($ideia->ideiaPergunta as $index => $pergunta)
                                                 <tr>
                                                     <td>
-                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ $pergunta->perguntas }}</textarea>
+                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas[{{ $index }}]">{{ $pergunta->pergunta }}</textarea>
                                                     </td>
                                                     <td>
-                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ $pergunta->respostas }}</textarea>
+                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas[{{ $index }}]">{{ $pergunta->resposta }}</textarea>
                                                     </td>
                                                     <td class="text-end">
                                                         <button type="button"
@@ -142,6 +142,7 @@
                                                             <i class="bi bi-trash3 fs-3"></i>
                                                         </button>
                                                     </td>
+                                                    <input type="hidden" name="grupo_perguntas[{{ $index }}][id]" value="{{ $pergunta->id }}" />
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -201,16 +202,17 @@
                 this.init();
             }
 
+            // Função para inicializar o editor
             async init() {
                 try {
                     this.editor = await ClassicEditor.create(document.querySelector('#ckeditor'));
-                    console.log(this.editor);
                 } catch (error) {
-                    console.error(error);
+                    console.error("Erro ao inicializar o editor: ", error);
                 }
             }
         }
 
+        // Inicializa o editor quando o documento estiver pronto
         $(document).ready(() => new KTCkeditor());
     </script>
 @endsection

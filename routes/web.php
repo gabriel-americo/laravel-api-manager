@@ -7,6 +7,9 @@ use App\Http\Controllers\Sistema\UsuarioController;
 use App\Http\Controllers\Sistema\ClienteController;
 use App\Http\Controllers\Sistema\IdeiaController;
 use App\Http\Controllers\Sistema\AprovacaoController;
+use App\Http\Controllers\Sistema\AlteracaoController;
+use App\Http\Controllers\Sistema\ImagemIdeiaController;
+use App\Http\Controllers\Sistema\ImagemAprovacaoController;
 use App\Http\Controllers\Sistema\ProdutoController;
 
 /* Login */
@@ -34,9 +37,7 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::resource('usuarios', UsuarioController::class);
 
     Route::prefix('usuarios')->name('usuarios.')->group(function () {
-        // Rota para exclusão múltipla
         Route::post('multi-delete', [UsuarioController::class, 'multiDelete'])->name('multi-delete');
-        // Rotas para atualização de e-mail e senha
         Route::patch('update-email/{id}', [UsuarioController::class, 'changeEmail'])->name('update-email');
         Route::patch('update-password/{id}', [UsuarioController::class, 'changePassword'])->name('update-password');
     });
@@ -45,7 +46,6 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::resource('clientes', ClienteController::class)->middleware('can:admin');
 
     Route::prefix('clientes')->name('clientes.')->group(function () {
-        // Rota para exclusão múltipla
         Route::post('multi-delete', [ClienteController::class, 'multiDelete'])->name('multi-delete')->middleware('can:admin');
     });
 
@@ -53,16 +53,40 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::resource('ideias', IdeiaController::class);
 
     Route::prefix('ideias')->name('ideias.')->group(function () {
-        // Rota para exclusão múltipla
         Route::post('multi-delete', [IdeiaController::class, 'multiDelete'])->name('multi-delete');
-        Route::post('upload-imagens', [IdeiaController::class, 'uploadImages'])->name('imagem-upload');
-        Route::post('create-subtitle', [IdeiaController::class, 'createSubtitleImage'])->name('create-subtitle');
         Route::get('images/{id}', [IdeiaController::class, 'createImages'])->name('images');
-        Route::get('download-imagem/{id}', [IdeiaController::class, 'download'])->name('imagem-download');
+    });
+
+    /* Rotas das ideias imagens */
+    Route::prefix('ideias-imagens')->name('ideias-imagens.')->group(function () {
+        Route::post('upload-imagem', [ImagemIdeiaController::class, 'uploadImages'])->name('upload-imagem');
+        Route::get('download-imagem/{id}', [ImagemIdeiaController::class, 'downloadImage'])->name('download-imagem');
+        Route::get('delete-imagem/{id}', [ImagemIdeiaController::class, 'deleteImage'])->name('delete-imagem');
+        Route::post('create-subtitle', [ImagemIdeiaController::class, 'createSubtitleImage'])->name('create-subtitle');
     });
 
     /* Rotas das aprovações */
     Route::resource('aprovacoes', AprovacaoController::class);
+
+    Route::prefix('aprovacoes')->name('aprovacoes.')->group(function () {
+        Route::post('multi-delete', [AprovacaoController::class, 'multiDelete'])->name('multi-delete');
+        Route::get('images/{id}', [AprovacaoController::class, 'createImages'])->name('images');
+        Route::post('update-status', [AprovacaoController::class, 'updateStatus'])->name('update-status');
+    });
+
+    /* Rotas das aprovações imagens */
+    Route::prefix('aprovacoes-imagens')->name('aprovacoes-imagens.')->group(function () {
+        Route::post('upload-imagem', [ImagemAprovacaoController::class, 'uploadImages'])->name('upload-imagem');
+        Route::get('download-imagem/{id}', [ImagemAprovacaoController::class, 'downloadImage'])->name('download-imagem');
+        Route::get('delete-imagem/{id}', [ImagemAprovacaoController::class, 'deleteImage'])->name('delete-imagem');
+        Route::post('create-subtitle', [ImagemAprovacaoController::class, 'createSubtitleImage'])->name('create-subtitle');
+    });
+
+    /* Rotas das alterações */
+    Route::prefix('alteracoes')->name('alteracoes.')->group(function () {
+        Route::post('change-status', [AlteracaoController::class, 'changeStatus'])->name('change-status');
+        Route::post('create-alteracao', [AlteracaoController::class, 'createAlteracao'])->name('create-alteracao');
+    });
 
     /* Rotas para fazer Exportação da tabela PDF */
     //Route::get('/exportar-pdf', 'ExportController@exportarPDF')->name('exportar.pdf');

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\ImagemIdeias;
-use App\Models\Ideias;
+use App\Models\Ideia;
+use App\Models\IdeiaImagem;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -12,95 +12,86 @@ use Illuminate\Support\Facades\Storage;
 
 class ImagemIdeiaController extends Controller
 {
-    protected $ideia;
-    protected $imagemIdeia;
+    protected $imagens_ideias;
+    protected $ideias;
 
-    public function __construct(Ideia $ideia, ImagemIdeias $imagemIdeia)
+    public function __construct(IdeiaImagem $imagens_ideias, Ideia $ideias)
     {
-        $this->ideia = $ideia;
-        $this->imagemIdeia = $imagemIdeia;
+        $this->ideias = $ideias;
+        $this->imagens_ideias = $imagens_ideias;
     }
 
-    public function createImages($id)
+    public function createSubtitleImage(Request $request)
     {
-        $ideia = Ideia::findOrFail($id);
-        $imagemIdeia = ImagemIdeias::where('ideias_id',$id)->get();
-
-        return view('sistema.ideias.imagem-ideias.create', compact('ideia', 'imagemIdeia'));
-    }
-
-    public function createLegendaIdeia(Request $request)
-    {
-        $imagemIdeia = $this->imagemIdeia->findOrFail($request->idImagem);
+        $imagemIdeia = $this->imagens_ideias->findOrFail($request->idImagem);
         $imagemIdeia->legenda = $request->legenda;
         $imagemIdeia->save();
+
+        return response()->json(['success' => 'Legenda atualizada com sucesso.']);
     }
 
     public function uploadImages(Request $request)
     {
         $request->validate([
-            'imageFile' => 'required',
-            'imageFile.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
+            'ideia_id' => 'required|exists:ideias,id',
+            'imageFile.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $ideia = $this->ideia->findOrFail($request->id);
+        $ideia = $this->ideias->findOrFail($request->ideia_id);
 
-        try
-        {
-            if($request->hasfile('imageFile')) {
-                $path = '/img/ideias/';
-
-                foreach($request->file('imageFile') as $file)
-                {
-                    $imageName = uniqid() . '-' . trim($file->getClientOriginalName());
-                    $file->storeAs($path, $imageName);
-                    $imgData[] = $imageName;
-                }
-
-                foreach($imgData as $i => $values) {
-                    $ideia->images()->create(['imagem' => $values]);
-                }
-
-                flash('Upload realizado com sucesso!')->success();
-
-                return redirect()->back();
+        try {
+            foreach ($request->file('imageFile') as $file) {
+                $path = 'public/img/ideias/';
+                $imageName = uniqid() . '-' . str_replace(" ", "-", trim($file->getClientOriginalName()));
+                $file->storeAs($path, $imageName);
+                $ideia->ideiaImagem()->create(['imagem' => $imageName]);
             }
-        } catch(\Exception $e) {
-            flash($e->getMessage())->warning();
 
-            return redirect()->back();
+            return response()->json(['success' => 'Imagem enviada com sucesso.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao fazer upload da imagem.']);
         }
     }
 
-    public function getDownload($imageId)
+    public function downloadImage($id)
     {
-        $imagemIdeia = ImagemIdeias::where('id', $imageId)->firstOrFail();
-        $path =  '/img/ideias/'. $imagemIdeia->imagem;
+        $dataImagem = $this->imagens_ideias->findOrFail($id);
 
-        return Storage::download($path, $imagemIdeia->imagem, ['Content-Type' => 'jpg']);
+        if ($dataImagem) {
+            $path = 'public/img/ideias/' . $dataImagem->imagem;
+
+            // Verifica se o arquivo existe no armazenamento (storage)
+            if (Storage::exists($path)) {
+                // Define o nome do arquivo para download
+                $fileName = basename($dataImagem->imagem);
+
+                // Realiza o download do arquivo
+                return response()->download(storage_path('app/' . $path), $fileName);
+            }
+        }
+
+        // Caso o arquivo não exista, retorne uma resposta adequada (por exemplo, redirecione ou exiba uma mensagem de erro)
+        return redirect()->back()->with('error', 'A imagem não está disponível para download.');
     }
 
-    public function deleteImage(Request $request, $id)
+    public function deleteImage($id)
     {
-        $imagemId = ImagemIdeias::where('id', $id)->first();
-        $idIdeia = $request->route('idIdeia');
+        $imagemId = $this->imagens_ideias->findOrFail($id);
 
-        try
-        {
+        try {
             $path = public_path('storage/img/ideias/');
-            $image_path = $path.$imagemId->imagem;
+            $image_path = $path . $imagemId->imagem;
 
-            File::delete($image_path);
+            if (File::exists($image_path)) {
+                File::delete($image_path);
+            }
 
             $imagemId->delete();
 
             flash('Imagem removida com sucesso!')->success();
-
-            return redirect()->route('ideias.imagem-ideias', ['id' => $idIdeia]);
-
+            return redirect()->back();
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
-
             return redirect()->back();
         }
     }

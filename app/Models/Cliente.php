@@ -25,18 +25,6 @@ class Cliente extends Authenticatable
         'email_verified_at' => 'datetime'
     ];
 
-    // Setter para a senha
-    public function setPasswordAttribute($password)
-    {
-        $this->attributes['password'] = Hash::make($password);
-    }
-
-    // Acesso ao status
-    public function getStatusAttribute()
-    {
-        return $this->attributes['status'] == 1 ? "Ativo" : "Desativado";
-    }
-
     // Relacionamento com EnderecoCobranca
     public function enderecoCobranca(): HasOne
     {
@@ -47,5 +35,17 @@ class Cliente extends Authenticatable
     public function enderecoEnvio(): HasOne
     {
         return $this->hasOne(EnderecoEnvio::class);
+    }
+
+    // Criptografa a senha antes de atribuí-la ao modelo
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
+    }
+
+    // Acessor para o atributo 'status', retorna 'Ativo' se for 1, senão 'Desativado'
+    public function getStatusAttribute($value)
+    {
+        return $value === 1 ? 'Ativo' : 'Desativado';
     }
 }

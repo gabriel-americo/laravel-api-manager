@@ -1,5 +1,9 @@
 # Sistema de Gerenciamento (CMS) em Laravel
 
+## Diagrama BD
+![Database Tables](database/images/bd_1.jpg)
+![Database Tables](database/images/bd_2.jpg)
+
 ## Visão Geral
 
 O Sistema de Gerenciamento é uma plataforma robusta e flexível para administrar e publicar conteúdo dinâmico na web. Construído com base no Laravel, este sistema oferece uma experiência completa de administração para usuários que desejam criar, editar e gerenciar diversos tipos de conteúdo de forma eficiente e intuitiva.
@@ -22,16 +26,6 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 -   **Autenticação e Segurança:** Sistemas robustos de autenticação e medidas de segurança para proteger dados sensíveis.
 -   **Gestão de Permissões:** Controle granular de acesso com diferentes níveis de permissão para usuários.
 
-### Personalização e Temas
-
--   **Personalização do Layout:** Flexibilidade para alterar o design e layout com temas personalizados.
--   **Widgets e Blocos de Conteúdo:** Adição de widgets e blocos de conteúdo em áreas específicas do site.
-
-### SEO e Análise
-
--   **Otimização para Motores de Busca (SEO):** Recursos integrados para otimização de SEO, URLs amigáveis, meta tags, etc.
--   **Integração de Ferramentas de Análise:** Conexão com ferramentas para análise de tráfego, comportamento do usuário, etc.
-
 ### Internacionalização e Localização
 
 -   **Suporte a Múltiplos Idiomas:** Capacidade de criar e gerenciar conteúdo em vários idiomas.
@@ -48,7 +42,7 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 
 ### Requisitos
 
--   PHP 8.0 ou superior
+-   PHP 8.1 ou superior
 -   Composer
 -   Banco de dados Relacional (MySQL, PostgreSQL, etc.)
 
@@ -57,17 +51,39 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 1. Clone este repositório:
 
     ```bash
-    git clone https://github.com/gabriel-americo/sistema-cms-laravel.git
+    git clone https://github.com/gabriel-americo/sistema-cms-laravel.git sistema-cms-laravel
     ```
 
-2. Instale as dependências do Composer:
+    ```bash
+    cd sistema-cms-laravel
+    ```
+
+2. Suba os containers do projeto:
+
+    ```bash
+    docker-compose up -d
+    ```
+
+3. Crie o Arquivo .env:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4. Acesse o container app:
+
+    ```bash
+    docker-compose exec app bash
+    ```
+
+5. Instale as dependências do Composer:
 
     ```bash
     composer install
     composer require laracasts/flash
     ```
 
-3. Configure o arquivo `.env` com as informações do banco de dados:
+6. Configure o arquivo `.env` com as informações do banco de dados:
 
     ```env
     DB_CONNECTION=mysql
@@ -78,16 +94,22 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
     DB_PASSWORD=sua-senha
     ```
 
-4. Execute as migrações para criar as tabelas no banco de dados:
+7. Gere a key do projeto Laravel:
+
+    ```bash
+    php artisan key:generate
+    ```
+
+8. Execute as migrações para criar as tabelas no banco de dados:
 
     ```bash
     php artisan migrate
     ```
 
-5. Inicie o servidor local:
+9. Acesse o projeto:
 
     ```bash
-    php artisan serve
+    http://localhost:8000
     ```
 
 ## Contribuições

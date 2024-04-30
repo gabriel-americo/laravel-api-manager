@@ -14,8 +14,13 @@ class UserTest extends TestCase
 
         $expected = [
             'nome',
+            'user',
             'email',
-            'password'
+            'password',
+            'sexo',
+            'imagem',
+            'ultimo_login',
+            'status'
         ];
 
         $arrayCompared = array_diff($expected, $user->getFillable());

@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         Cadastro imagens - {{ $ideia->nome }}</h1>
@@ -23,10 +23,10 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid mb-5">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid mb-5">
+            <div class="app-container container-xxl">
 
-                <div class="tab-pane fade active show" id="kt_ecommerce_add_product_general" role="tab-panel">
+                <div class="tab-pane fade active show" role="tab-panel">
                     <div class="d-flex flex-column gap-7 gap-lg-10">
                         <div class="card card-flush py-4">
                             <div class="card-header">
@@ -37,13 +37,12 @@
 
                             <div class="card-body pt-0">
                                 <form class="form fv-plugins-bootstrap5 fv-plugins-framework"
-                                    action="{{ route('ideias.imagem-upload') }}" method="post"
+                                    action="{{ route('ideias-imagens.upload-imagem') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
 
-                                    <div class="mb-8">
-                                        <div class="imgPreview">
-                                        </div>
+                                    <div class="mb-5">
+                                        <div class="imgPreview row object-fit-cover"></div>
                                     </div>
 
                                     <div class="custom-file">
@@ -53,54 +52,54 @@
                                         <label class="custom-file-label" for="images">Escolha as imagens</label>
                                     </div>
 
-                                    <button type="submit" name="submit" class="btn btn-primary btn-block mt-4"> Upload
-                                        Images </button>
-
-                                    <div id="error-messages"></div>
+                                    <button type="submit" class="btn btn-primary btn-block mt-4"> Upload Images </button>
                                 </form>
                                 <div class="text-muted fs-7">Coloque as imagens das ideias.</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div id="kt_app_content_container" class="app-container container-xxl">
-            <div class="card">
-                <div class="card-body p-lg-17">
-                    <div class="mb-0">
-                        <h1 class="text-dark mb-10">Imagens da Ideia - {{ $ideia->nome }}</h1>
+                            <div class="separator separator-dashed mb-8"></div>
 
-                        <div class="row g-10">
-                            @foreach ($ideia->images as $image)
-                                <div class="col-md-4">
-                                    <div class="card-xl-stretch me-md-6">
-                                        <div class="d-block overlay">
-                                            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-200px"
-                                                style="background-image:url({{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }});">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <h1 class="text-dark mb-10">Imagens da Ideia - {{ $ideia->nome }}</h1>
+
+                                    <div class="row g-10">
+                                        @foreach ($ideia->ideiaImagem as $image)
+                                            <div class="col-md-4">
+                                                <div class="card-xl-stretch me-md-6">
+                                                    <div class="d-block overlay">
+                                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-200px"
+                                                            style="background-image:url({{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }});">
+                                                        </div>
+
+                                                        <div
+                                                            class="overlay-layer card-rounded bg-dark bg-opacity-50 d-flex justify-content-around">
+                                                            <a class="d-flex align-items-center justify-content-center w-33 h-100"
+                                                                data-fslightbox="lightbox-ideias"
+                                                                href="{{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }}">
+                                                                <i class="bi bi-eye fs-2x text-white"></i>
+                                                            </a>
+                                                            <a class="d-flex align-items-center justify-content-center w-33 h-100"
+                                                                href="{{ route('ideias-imagens.download-imagem', $image->id) }}">
+                                                                <i class="bi bi-download fs-2x text-white"></i>
+                                                            </a>
+                                                            <a class="d-flex align-items-center justify-content-center w-33 h-100"
+                                                                href="{{ route('ideias-imagens.delete-imagem', $image->id) }}"
+                                                                onclick="return confirmDeletion(event, this)">
+                                                                <i class="bi bi-trash fs-2x text-white"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-5">
+                                                        <textarea id="legenda-{{ $image->id }}" class="form-control">{{ $image->legenda }}</textarea>
+                                                    </div>
+                                                </div>
                                             </div>
-
-                                            <div
-                                                class="overlay-layer card-rounded bg-dark bg-opacity-25 d-flex justify-content-around">
-                                                <a class="d-flex align-items-center justify-content-center w-50 h-100"
-                                                    data-fslightbox="lightbox-hot-sales"
-                                                    href="{{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }}">
-                                                    <i class="bi bi-eye fs-2x text-white"></i>
-                                                </a>
-                                                <a class="d-flex align-items-center justify-content-center w-50 h-100"
-                                                    href="{{ route('ideias.imagem-download', $image->id) }}">
-                                                    <i class="bi bi-download fs-2x text-white"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-5">
-                                            <textarea id="legenda-{{ $image->id }}" class="form-control">{{ $image->legenda }}</textarea>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,85 +112,100 @@
     <script src="{{ asset('assets/plugins/custom/fslightbox/fslightbox.bundle.js') }}"></script>
 
     <script>
-        function saveLegend(id, legenda) {
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: "{{ route('ideias.create-subtitle') }}",
-                data: {
+        $(function() {
+            const form = $('form');
+            const images = $('#images');
+            const legendas = $('textarea[id^="legenda-"]');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            const ajaxCall = (type, url, data, successMessage, errorMessage) => {
+                return $.ajax({
+                    type,
+                    dataType: "json",
+                    url,
+                    data,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    processData: false,
+                    contentType: false,
+                    success: () => Swal.fire({
+                        icon: 'success',
+                        title: 'Sucesso',
+                        text: successMessage
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    }),
+                    error: () => Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage
+                    })
+                });
+            };
+
+            const saveLegend = (id, legenda) => {
+                ajaxCall("POST", "{{ route('ideias-imagens.create-subtitle') }}", {
                     'legenda': legenda,
                     'idImagem': id
-                },
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                success: function(data) {
-                    console.log(data);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Erro ao atualizar legenda: ', errorThrown);
-                }
-            });
-        }
+                }, 'Legenda atualizada com sucesso.', 'Erro ao atualizar legenda.');
+            };
 
-        $(function() {
-            const multiImgPreview = function(input, imgPreviewPlaceholder) {
+            const multiImgPreview = (input, imgPreviewPlaceholder) => {
                 if (input.files) {
-                    let filesAmount = input.files.length;
+                    [...input.files].forEach(file => {
+                        const reader = new FileReader();
 
-                    for (let i = 0; i < filesAmount; i++) {
-                        let reader = new FileReader();
-
-                        reader.onload = function(event) {
-                            $($.parseHTML('<img class="col-md-3 col-sm-4 gallery-item">')).attr('src', event
-                                    .target.result)
+                        reader.onload = event => {
+                            $($.parseHTML(
+                                    '<div class="col-md-3 col-sm-4 gallery-item"><img class="h-75 d-inline-block img-fluid"></div>'
+                                ))
+                                .find('img')
+                                .attr('src', event.target.result)
+                                .end()
                                 .appendTo(imgPreviewPlaceholder);
                         }
 
-                        reader.readAsDataURL(input.files[i]);
-                    }
+                        reader.readAsDataURL(file);
+                    });
                 }
             };
 
-            $('#images').on('change', function() {
+            images.on('change', function() {
                 multiImgPreview(this, 'div.imgPreview');
             });
 
-            $('form').on('submit', function(e) {
+            form.on('submit', function(e) {
                 e.preventDefault();
+                ajaxCall('POST', $(this).attr('action'), new FormData(this), 'Imagem enviada com sucesso.',
+                    'Erro ao enviar formulário!');
+            });
 
-                $.ajax({
-                    url: $(this).attr('action'),
-                    method: 'POST',
-                    data: new FormData(this),
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sucesso',
-                            text: 'Imagem enviada com sucesso.'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Erro ao enviar formulário!'
-                        });
-                    }
-                });
+            legendas.on('input', function() {
+                const id = $(this).attr('id').split('-')[1];
+                const legenda = $(this).val();
+                saveLegend(id, legenda);
             });
         });
 
-        $('textarea[id^="legenda-"]').on('input', function() {
-            var id = $(this).attr('id').split('-')[1];
-            var legenda = $(this).val();
-            saveLegend(id, legenda);
-        });
+        function confirmDeletion(e, element) {
+            e.preventDefault();
+            const href = $(element).attr('href');
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Você não poderá reverter isso!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, delete!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+        }
     </script>
 @endsection

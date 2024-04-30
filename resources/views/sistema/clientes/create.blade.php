@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Cadastro
                     </h1>
@@ -23,8 +23,8 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid">
+            <div class="app-container container-xxl">
                 <div class="card mb-5 mb-xl-10">
                     <div class="card-header border-0">
                         <div class="card-title m-0">
@@ -40,9 +40,9 @@
 
                                 <div class="col-lg-8">
                                     <div class="image-input image-input-outline" data-kt-image-input="true"
-                                        style="background-image: url('assets/media/svg/avatars/blank.svg')">
-                                        <div class="image-input-wrapper w-125px h-125px"
-                                            style="background-image: url({{ asset('/assets/media/svg/avatars/blank.svg') }})">
+                                        style="background-image: url({{ asset('/assets/media/svg/avatars/blank.svg') }})">
+                                        <div
+                                            class="image-input-wrapper w-125px h-125px"style="background-image: url({{ asset('/assets/media/svg/avatars/blank.svg') }})">
                                         </div>
 
                                         <label
@@ -142,7 +142,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="email"
+                                            <input type="text" id="email_cli" name="email"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="E-mail" value="{{ old('email') }}">
                                             @error('email')
@@ -269,7 +269,7 @@
                             </div>
 
                             <div class="row mb-6">
-                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Sexo</label>
+                                <label class="col-lg-4 col-form-label fw-bold fs-6">Sexo</label>
                                 <div class="col-lg-8 fv-row">
                                     <select name="sexo_cobrancas" aria-label="Sexo" data-control="select2"
                                         data-placeholder="Sexo"
@@ -300,7 +300,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="rua_cobrancas" id="rua_cobrancas"
+                                            <input type="text" name="rua_cobrancas" id="logradouro_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Rua" value="{{ old('rua_cobrancas') }}">
                                         </div>
@@ -352,7 +352,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="cidade_cobrancas" id="cidade_cobrancas"
+                                            <input type="text" name="cidade_cobrancas" id="localidade_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Cidade" value="{{ old('cidade_cobrancas') }}">
                                         </div>
@@ -365,7 +365,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="estado_cobrancas" id="estado_cobrancas"
+                                            <input type="text" name="estado_cobrancas" id="uf_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Estado" value="{{ old('estado_cobrancas') }}">
                                         </div>
@@ -417,7 +417,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="email_cobrancas"
+                                            <input type="text" id="email_cob" name="email_cobrancas"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="E-mail" value="{{ old('email_cobrancas') }}">
                                         </div>
@@ -434,7 +434,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="nome_envios"
+                                            <input type="text" id="nome_env" name="nome_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Nome" value="{{ old('nome_envios') }}">
                                         </div>
@@ -447,7 +447,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="sobrenome_envios"
+                                            <input type="text" id="sobr_env" name="sobrenome_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Sobrenome" value="{{ old('sobrenome_envios') }}">
                                         </div>
@@ -473,7 +473,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="rua_envios" id="rua_envios"
+                                            <input type="text" name="rua_envios" id="logradouro_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Rua" value="{{ old('rua_envios') }}">
                                         </div>
@@ -525,7 +525,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="cidade_envios" id="cidade_envios"
+                                            <input type="text" name="cidade_envios" id="localidade_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Cidade" value="{{ old('cidade_envios') }}">
                                         </div>
@@ -551,7 +551,7 @@
                                 <div class="col-lg-8">
                                     <div class="row">
                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                            <input type="text" name="estado_envios" id="estado_envios"
+                                            <input type="text" name="estado_envios" id="uf_envios"
                                                 class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                                 placeholder="Estado" value="{{ old('estado_envios') }}">
                                         </div>
@@ -600,27 +600,42 @@
 @section('ajax-status')
     <script type="text/javascript">
         $(document).ready(function() {
+            const fields = ['nome', 'sobr', 'email'];
+            const suffixes = ['cli', 'cob', 'env'];
+
+            fields.forEach(field => {
+                $(`#${field}_cli`).on('keyup', function() {
+                    const value = $(this).val();
+                    suffixes.slice(1).forEach(suffix => {
+                        $(`#${field}_${suffix}`).val(value);
+                    });
+                });
+            });
+
             const cepFields = ['#cep_cobrancas', '#cep_envios'];
+            const fieldMapping = {
+                'cep_cobrancas': 'cobrancas',
+                'cep_envios': 'envios'
+            };
+
+            // Função para buscar dados do CEP
+            async function fetchCepData(cep, field) {
+                try {
+                    const response = await $.getJSON(`https://viacep.com.br/ws/${cep}/json/`);
+                    ['logradouro', 'localidade', 'uf', 'bairro'].forEach(attr => {
+                        $(`#${attr}_${fieldMapping[field]}`).val(response[attr]);
+                    });
+                } catch (error) {
+                    alert('CEP não encontrado.');
+                }
+            }
 
             cepFields.forEach(field => {
                 $(field).on('input', function() {
                     const cep = $(this).val().replace(/\D/g, '');
 
                     if (cep.length === 8) {
-                        $.ajax({
-                            url: 'https://viacep.com.br/ws/' + cep + '/json/',
-                            type: 'GET',
-                            success: function(response) {
-                                $(field.replace('cep', 'rua')).val(response.logradouro);
-                                $(field.replace('cep', 'cidade')).val(response
-                                    .localidade);
-                                $(field.replace('cep', 'estado')).val(response.uf);
-                                $(field.replace('cep', 'bairro')).val(response.bairro);
-                            },
-                            error: function() {
-                                alert('CEP não encontrado.');
-                            }
-                        });
+                        fetchCepData(cep, field.slice(1));
                     }
                 });
             });

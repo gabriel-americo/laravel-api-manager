@@ -14,17 +14,25 @@ use Illuminate\Http\Request;
 class UsuarioController extends Controller
 {
     protected $usuario;
+    protected $role;
 
-    public function __construct(Usuario $usuario)
+    public function __construct(Usuario $usuario, Role $role)
     {
         $this->usuario = $usuario;
+        $this->role = $role;
     }
 
     // Função para exibir todos os usuários com suas respectivas funções (roles)
     public function index()
     {
-        $usuarios = $this->usuario->with('roles')->get();
-        $roles = Role::all();
+        $usuarios = $this->usuario->with('roles')->get()->map(function ($usuario) {
+            $usuario->imagePath = File::exists(public_path('storage/img/usuarios/' . $usuario->imagem))
+                ? 'storage/img/usuarios/' . $usuario->imagem
+                : 'assets/media/avatars/blank.png';
+            return $usuario;
+        });
+
+        $roles = $this->role->all();
 
         return view('sistema.usuarios.index', compact('usuarios', 'roles'));
     }
@@ -32,7 +40,7 @@ class UsuarioController extends Controller
     // Função para exibir o formulário de criação de usuário
     public function create()
     {
-        $roles = Role::all();
+        $roles = $this->role->all();
 
         return view('sistema.usuarios.create', compact('roles'));
     }
@@ -42,8 +50,7 @@ class UsuarioController extends Controller
     {
         $data = $request->validated();
         $data['status'] = $request->has('status') ? '1' : '0';
-
-        $this->processImage($request, $data); // Chama a função para processar a imagem
+        $this->processImage($request, $data);
 
         try {
             $usuarios = $this->usuario->create($data);
@@ -61,15 +68,20 @@ class UsuarioController extends Controller
     public function show($id)
     {
         $usuario = $this->usuario->with('roles')->findOrFail($id);
+        $imagem = 'assets/media/avatars/blank.png';
 
-        return view('sistema.usuarios.show', compact('usuario'));
+        if ($usuario->imagem && File::exists(public_path('storage/img/usuarios/' . $usuario->imagem))) {
+            $imagem = 'storage/img/usuarios/' . $usuario->imagem;
+        }
+
+        return view('sistema.usuarios.show', compact('usuario', 'imagem'));
     }
 
     // Função para exibir o formulário de edição de usuário
     public function edit($id)
     {
         $usuario = $this->usuario->findOrFail($id);
-        $roles = Role::all();
+        $roles = $this->role->all();
         $status = $usuario->status === 'Ativo' ? '1' : '0';
 
         return view('sistema.usuarios.edit', compact('usuario', 'roles', 'status'));
@@ -78,10 +90,9 @@ class UsuarioController extends Controller
     // Função para atualizar as informações de um usuário no banco de dados
     public function update(Request $request, $id)
     {
-        $data = $request->only(['nome', 'user', 'sexo', 'status']);
-
+        $data = $request->only(['nome', 'user', 'sexo']);
+        $data['status'] = $request->has('status') ? '1' : '0';
         $usuarios = $this->usuario->findOrFail($id);
-
         $this->processImage($request, $data, $id);
 
         try {
@@ -122,11 +133,11 @@ class UsuarioController extends Controller
     {
         if ($request->hasFile('imagem')) {
             $path = 'public/img/usuarios/';
-            $usuarios = $id ? $this->usuario->find($id) : null;
+            $usuario = $id ? $this->usuario->findOrFail($id) : null;
 
             // Deleta a imagem antiga do servidor se existir
-            if ($usuarios && $usuarios->imagem !== null) {
-                File::delete(public_path('storage/img/usuarios/' . $usuarios->imagem));
+            if ($usuario && $usuario->imagem !== null) {
+                File::delete(public_path('storage/img/usuarios/' . $usuario->imagem));
             }
 
             $imageName = uniqid() . '-' . str_replace(" ", "-", trim($request->imagem->getClientOriginalName()));
@@ -145,11 +156,11 @@ class UsuarioController extends Controller
             $usuario->save();
 
             flash('Email atualizado com sucesso!')->success();
-            return redirect()->back();
         } else {
             flash('Senha incorreta. Não foi possível atualizar o email.')->error();
-            return redirect()->back();
         }
+
+        return redirect()->back();
     }
 
     // Função para alterar a senha de um usuário

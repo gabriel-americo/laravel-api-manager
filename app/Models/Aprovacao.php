@@ -25,8 +25,18 @@ class Aprovacao extends Model
     }
 
     // Retorna as imagens associadas à aprovação
-    public function images(): HasMany
+    public function aprovacaoImagem(): HasMany
     {
-        return $this->hasMany(ImagemAprovacao::class, 'aprovacao_id', 'id');
+        return $this->hasMany(AprovacaoImagem::class, 'aprovacao_id', 'id');
+    }
+
+    public function alteracoes(): HasMany
+    {
+        return $this->hasMany(Alteracao::class, 'aprovacao_id', 'id');
+    }
+
+    public function usuarios(): HasMany
+    {
+        return $this->hasMany(Usuario::class, 'usuario_id', 'id');
     }
 }

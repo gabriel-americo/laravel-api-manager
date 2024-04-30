@@ -14,11 +14,12 @@ class ClientesRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required|min:3',
+            'nome'      => 'required|min:3',
             'sobrenome' => 'required|min:3',
-            'user' => 'required|min:3|unique:clientes',
-            'email' => 'required|email|unique:clientes',
-            'password' => 'required|min:6'
+            'user'      => 'required|min:3|unique:clientes',
+            'email'     => 'required|email|unique:clientes',
+            'password'  => 'required|min:6',
+            'site'      => ''
         ];
     }
 

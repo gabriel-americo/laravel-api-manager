@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Cadastro
                     </h1>
@@ -23,8 +23,8 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid">
+            <div class="app-container container-xxl">
                 <div class="card mb-5 mb-xl-10">
                     <div class="card-header border-0">
                         <div class="card-title m-0">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <form class="form" action="{{ route('ideias.store') }}" method="POST" enctype="multipart/form-data">
+                    <form class="form" action="{{ route('ideias.store') }}" method="POST">
                         <div class="card-body border-top p-9">
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Nome da Arte</label>
@@ -127,13 +127,15 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($autoPergunta as $pergunta)
+                                            @foreach ($autoPergunta as $index => $pergunta)
                                                 <tr>
                                                     <td>
-                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ $pergunta }}</textarea>
+                                                        <textarea class="form-control form-control-solid"
+                                                            name="grupo_perguntas[{{ $index }}][pergunta]">{{ $pergunta }}</textarea>
                                                     </td>
                                                     <td>
-                                                        <textarea class="form-control form-control-solid" name="grupo_perguntas">{{ old('resposta') }}</textarea>
+                                                        <textarea class="form-control form-control-solid"
+                                                            name="grupo_perguntas[{{ $index }}][resposta]">{{ old('resposta') }}</textarea>
                                                     </td>
                                                     <td class="text-end">
                                                         <button type="button"
@@ -149,14 +151,14 @@
                                 </div>
 
                                 <button type="button" class="btn btn-light-primary me-auto"
-                                    id="kt_create_new_custom_fields_add"> <i class="bi bi-plus"></i> Adicionar
-                                    Pergunta</button>
+                                    id="kt_create_new_custom_fields_add">
+                                    <i class="bi bi-plus"></i> Adicionar Pergunta
+                                </button>
                             </div>
 
                             <div class="mb-10">
                                 <label class="form-label fs-5 fw-bold mb-3">Status do desenho:</label>
-                                <div class="d-flex flex-column flex-wrap fw-bold"
-                                    data-kt-customer-table-filter="payment_type">
+                                <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input" type="radio" name="status" value="0"
                                             checked>
@@ -198,16 +200,17 @@
                 this.init();
             }
 
+            // Função para inicializar o editor
             async init() {
                 try {
                     this.editor = await ClassicEditor.create(document.querySelector('#ckeditor'));
-                    console.log(this.editor);
                 } catch (error) {
-                    console.error(error);
+                    console.error("Erro ao inicializar o editor: ", error);
                 }
             }
         }
 
+        // Inicializa o editor quando o documento estiver pronto
         $(document).ready(() => new KTCkeditor());
     </script>
 @endsection

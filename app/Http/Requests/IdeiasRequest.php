@@ -15,7 +15,12 @@ class IdeiasRequest extends FormRequest
     {
         return [
             'nome' => 'required|min:3|max:80',
+            'descricao' => '',
+            'data_inicio' => '',
+            'data_entrega' => '',
+            'data_lancamento' => '',
             'criador' => 'required|min:2',
+            'status' => '',
         ];
     }
 

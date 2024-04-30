@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detalhe da
@@ -24,8 +24,8 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid">
+            <div class="app-container container-xxl">
                 @if (session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
@@ -106,15 +106,20 @@
                                                 </div>
 
                                                 <div
-                                                    class="overlay-layer card-rounded bg-dark bg-opacity-25 d-flex justify-content-around">
-                                                    <a class="d-flex align-items-center justify-content-center w-50 h-100"
+                                                    class="overlay-layer card-rounded bg-dark bg-opacity-50 d-flex justify-content-around">
+                                                    <a class="d-flex align-items-center justify-content-center w-33 h-100"
                                                         data-fslightbox="lightbox-hot-sales"
                                                         href="{{ $image->imagem ? asset('storage/img/ideias/' . $image->imagem) : asset('assets/media/svg/avatars/blank.svg') }}">
                                                         <i class="bi bi-eye fs-2x text-white"></i>
                                                     </a>
-                                                    <a class="d-flex align-items-center justify-content-center w-50 h-100"
-                                                        href="{{ route('ideias.imagem-download', $image->id) }}">
+                                                    <a class="d-flex align-items-center justify-content-center w-33 h-100"
+                                                        href="{{ route('ideias-imagens.download-imagem', $image->id) }}">
                                                         <i class="bi bi-download fs-2x text-white"></i>
+                                                    </a>
+                                                    <a class="d-flex align-items-center justify-content-center w-33 h-100"
+                                                        href="{{ route('ideias-imagens.delete-imagem', $image->id) }}"
+                                                        onclick="return confirmDeletion(event, this)">
+                                                        <i class="bi bi-trash fs-2x text-white"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -137,4 +142,23 @@
 
 @section('ajax-status')
     <script src="{{ asset('assets/plugins/custom/fslightbox/fslightbox.bundle.js') }}"></script>
+    <script>
+        function confirmDeletion(e, element) {
+            e.preventDefault();
+            const href = $(element).attr('href');
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Você não poderá reverter isso!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, delete!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+        }
+    </script>
 @endsection

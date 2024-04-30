@@ -9,9 +9,7 @@ class Alteracao extends Model
 {
     protected $table = 'alteracoes';
 
-    protected $fillable = ['correcao', 'data', 'status', 'aprovacao_id', 'usuario_id'];
-
-    protected $dates = ['data'];
+    protected $fillable = ['correcao', 'status', 'aprovacao_id', 'usuario_id'];
 
     // Retorna a data no formato 'd/m/Y' se existir, caso contrário retorna "-"
     public function getDataBrAttribute(): string
@@ -28,6 +26,6 @@ class Alteracao extends Model
     // Retorna o usuário associado à alteração
     public function usuario(): BelongsTo
     {
-        return $this->belongsTo(Usuario::class, 'usuarios_id', 'id');
+        return $this->belongsTo(Usuario::class, 'usuario_id', 'id');
     }
 }

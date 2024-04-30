@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detalhe do
                         Cliente</h1>
@@ -23,21 +23,21 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid">
+            <div class="app-container container-xxl">
                 <div class="d-flex flex-column flex-xl-row">
                     <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
                         <div class="card mb-5 mb-xl-8">
                             <div class="card-body pt-15">
                                 <div class="d-flex flex-center flex-column mb-5">
                                     <div class="symbol symbol-100px symbol-circle mb-7">
-                                        <img src="{{ $cliente->imagem ? asset('storage/img/cliente/' . $cliente->imagem) : asset('assets/media/svg/avatars/blank.svg') }}"
+                                        <img src="{{ $cliente->imagem ? asset('storage/img/clientes/' . $cliente->imagem) : asset('assets/media/svg/avatars/blank.svg') }}"
                                             alt="{{ $cliente->nome }}" />
                                     </div>
 
-                                    <a href="#"
+                                    <span
                                         class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">{{ $cliente->nome }}
-                                        {{ $cliente->sobrenome }}</a>
+                                        {{ $cliente->sobrenome }}</span>
 
                                     <div class="fs-5 fw-semibold text-muted mb-6">Software Enginer</div>
 

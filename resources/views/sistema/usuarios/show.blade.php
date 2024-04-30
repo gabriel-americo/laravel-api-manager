@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Detalhe do
                         Usuario</h1>
@@ -23,20 +23,14 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid">
+            <div class="app-container container-xxl">
                 <div class="card mb-5 mb-xxl-8">
                     <div class="card-body pt-9 pb-0">
                         <div class="d-flex flex-wrap flex-sm-nowrap">
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    @if ($usuario->imagem && File::exists(public_path('storage/img/usuarios/' . $usuario->imagem)))
-                                        <img src="{{ asset('storage/img/usuarios/' . $usuario->imagem) }}"
-                                            alt="{{ $usuario->nome }}" />
-                                    @else
-                                        <img src="{{ asset('assets/media/avatars/blank.png') }}"
-                                            alt="{{ $usuario->nome }}" />
-                                    @endif
+                                    <img src="{{ asset($imagem) }}" alt="{{ $usuario->nome }}" />
                                     <div
                                         class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px">
                                     </div>

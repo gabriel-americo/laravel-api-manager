@@ -35,23 +35,22 @@ class ClienteController extends Controller
     // Armazena um novo cliente no banco de dados
     public function store(ClientesRequest $request)
     {
-        // Coleta os dados do formulário
+        $data = $request->validated();
+        $data['status'] = $request->has('status') ? '1' : '0';
         $dataCobranca = $request->only(['nome_cobrancas', 'sobrenome_cobrancas', 'cpf_cobrancas', 'cnpj_cobrancas', 'empresa_cobrancas', 'nascimento_cobrancas', 'sexo_cobrancas', 'rua_cobrancas', 'numero_cobrancas', 'complemento_cobrancas', 'bairro_cobrancas', 'cidade_cobrancas', 'cep_cobrancas', 'pais_cobrancas', 'estado_cobrancas', 'telefone_cobrancas', 'celular_cobrancas', 'email_cobrancas']);
         $dataEnvio = $request->only(['nome_envios', 'sobrenome_envios', 'empresa_envios', 'rua_envios', 'numero_envios', 'complemento_envios', 'bairro_envios', 'cidade_envios', 'cep_envios', 'pais_envios', 'estado_envios']);
 
+        // Salva a imagem, se fornecida
+        if ($request->hasFile('imagem')) {
+            $path = 'public/img/clientes/';
+            $imageName = uniqid() . '-' . str_replace(" ", "-", trim($request->imagem->getClientOriginalName()));
+            $request->imagem->storeAs($path, $imageName);
+            $data['imagem'] = $imageName;
+        }
+
         try {
-            $dataCliente = $request->validated();
-            $dataCliente['status'] = $request->has('status') ? '1' : '0';
-
-            // Salva a imagem, se fornecida
-            if ($request->hasFile('imagem')) {
-                $imageName = uniqid() . '-' . trim($request->imagem->getClientOriginalName());
-                $request->imagem->storeAs('/img/clientes/', $imageName);
-                $dataCliente['imagem'] = $imageName;
-            }
-
             // Cria o cliente e seus endereços relacionados
-            $cliente = $this->cliente->create($dataCliente);
+            $cliente = $this->cliente->create($data);
             $cliente->enderecoCobranca()->create($dataCobranca);
             $cliente->enderecoEnvio()->create($dataEnvio);
 
@@ -85,21 +84,20 @@ class ClienteController extends Controller
     // Atualiza os dados de um cliente
     public function update(Request $request, $id)
     {
-        // Coleta os dados do formulário
+        $dataCliente = $request->all();
+        $dataCliente['status'] = ($dataCliente['status'] == '1' ? '1' : '0');
         $dataCobranca = $request->only(['nome_cobrancas', 'sobrenome_cobrancas', 'cpf_cobrancas', 'cnpj_cobrancas', 'empresa_cobrancas', 'nascimento_cobrancas', 'sexo_cobrancas', 'rua_cobrancas', 'numero_cobrancas', 'complemento_cobrancas', 'bairro_cobrancas', 'cidade_cobrancas', 'cep_cobrancas', 'pais_cobrancas', 'estado_cobrancas', 'telefone_cobrancas', 'celular_cobrancas', 'email_cobrancas']);
         $dataEnvio = $request->only(['nome_envios', 'sobrenome_envios', 'empresa_envios', 'rua_envios', 'numero_envios', 'complemento_envios', 'bairro_envios', 'cidade_envios', 'cep_envios', 'pais_envios', 'estado_envios']);
 
+        // Atualiza a imagem, se fornecida
+        if (isset($dataCliente['imagem']) && $dataCliente['imagem'] != null) {
+            $path = 'public/img/clientes/';
+            $imageName = uniqid() . '-' . str_replace(" ", "-", trim($request->imagem->getClientOriginalName()));
+            $request->imagem->storeAs($path, $imageName);
+            $dataCliente['imagem'] = $imageName;
+        }
+
         try {
-            $dataCliente = $request->validated();
-            $dataCliente['status'] = ($dataCliente['status'] == '1' ? '1' : '0');
-
-            // Atualiza a imagem, se fornecida
-            if (isset($dataCliente['imagem']) && $dataCliente['imagem'] != null) {
-                $imageName = uniqid() . '-' . trim($request->imagem->getClientOriginalName());
-                $request->imagem->storeAs('/img/clientes/', $imageName);
-                $dataCliente['imagem'] = $imageName;
-            }
-
             $clientes = $this->cliente->findOrFail($id);
 
             // Atualiza os dados do cliente e seus endereços relacionados
@@ -108,11 +106,9 @@ class ClienteController extends Controller
             $clientes->enderecoEnvio()->update($dataEnvio);
 
             flash('Cliente atualizado com sucesso!')->success();
-
             return redirect()->route('clientes.index');
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
-
             return redirect()->back();
         }
     }
@@ -120,22 +116,22 @@ class ClienteController extends Controller
     // Remove um cliente
     public function destroy($id)
     {
-        $clientes = $this->cliente->findOrFail($id);
+        $cliente = $this->cliente->findOrFail($id);
+
+        // Remove a imagem do cliente, se existir
+        $image_path = storage_path('public/img/clientes/' . $cliente->imagem);
+        if (File::exists($image_path)) {
+            File::delete($image_path);
+        }
 
         try {
-            // Remove a imagem do cliente, se existir
-            $image_path = app_path('storage/img/clientes/' . $clientes->imagem);
-            File::delete($image_path);
-
             // Remove o cliente
-            $clientes->delete();
+            $cliente->delete();
 
             flash('Cliente removido com sucesso!')->success();
-
             return redirect()->route('clientes.index');
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
-
             return redirect()->back();
         }
     }
@@ -143,8 +139,13 @@ class ClienteController extends Controller
     // Remove vários clientes selecionados
     public function multiDelete(Request $request)
     {
-        $this->cliente->whereIn('id', $request->get('selected'))->delete();
+        $selectedIds = $request->get('selected');
 
-        return response("Clientes selecionados excluídos com sucesso.", 200);
+        if ($selectedIds) {
+            $this->cliente->whereIn('id', $selectedIds)->delete();
+            return response("Clientes selecionados excluídos com sucesso.", 200);
+        }
+
+        return response("Nenhum cliente selecionado para exclusão.", 400);
     }
 }

@@ -19,6 +19,7 @@ class UsuariosRequest extends FormRequest
             'user'        => 'required|min:3|unique:usuarios',
             'email'       => 'required|email|unique:usuarios',
             'sexo'        => 'required',
+            'status'      => 'required',
             'password'    => 'required|min:6',
             'roles'       => 'required',
         ];

@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="app-toolbar py-3 py-lg-6">
+            <div class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         Atualização</h1>
@@ -23,8 +23,8 @@
             </div>
         </div>
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="app-content flex-column-fluid">
+            <div class="app-container container-xxl">
                 <div class="card mb-5 mb-xl-10">
                     <div class="card-header border-0">
                         <div class="card-title m-0">
@@ -296,16 +296,30 @@
             const $confirmPassword = $('#confirmpassword');
             const $updateButton = $('#btnAtualizarSenha');
 
-            $newPassword.add($confirmPassword).on('input', function() {
+            // Função para verificar se as senhas são iguais
+            function arePasswordsEqual() {
                 const newPassword = $newPassword.val();
                 const confirmPassword = $confirmPassword.val();
-                const isConfirmPasswordValid = newPassword === confirmPassword;
+                return newPassword === confirmPassword;
+            }
 
+            // Função para atualizar a validade da confirmação de senha
+            function updatePasswordValidity() {
+                const isConfirmPasswordValid = arePasswordsEqual();
                 $confirmPassword.toggleClass('is-valid', isConfirmPasswordValid);
                 $confirmPassword.toggleClass('is-invalid', !isConfirmPasswordValid);
+            }
 
-                // Desabilitar o botão de atualizar se o campo de confirmação de senha não for válido
+            // Função para atualizar o estado do botão de atualização
+            function updateButtonState() {
+                const isConfirmPasswordValid = arePasswordsEqual();
                 $updateButton.prop('disabled', !isConfirmPasswordValid);
+            }
+
+            // Adicionar ouvinte de evento para atualizar a validade da senha e o estado do botão
+            $newPassword.add($confirmPassword).on('input', function() {
+                updatePasswordValidity();
+                updateButtonState();
             });
         });
     </script>

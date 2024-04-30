@@ -105,6 +105,7 @@
                                     </th>
                                     <th class="min-w-125px">Ideia</th>
                                     <th class="min-w-125px">Aprovado</th>
+                                    <th class="min-w-125px text-center">Imagens</th>
                                     <th class="text-end min-w-100px">Ações</th>
                                 </tr>
                             </thead>
@@ -126,6 +127,11 @@
                                                 class="badge {{ $aprovacao->status == 'Sim' ? 'badge-light-success' : 'badge-light-danger' }}">
                                                 {{ $aprovacao->status }}
                                             </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('aprovacoes.images', $aprovacao->id) }}">
+                                                <i class="bi bi-images fs-1"></i>
+                                            </a>
                                         </td>
                                         <td class="text-end">
                                             <a href="#"
@@ -166,118 +172,113 @@
     <script type="text/javascript">
         "use strict";
 
-        var KTUsersList = function() {
-            const tableName = "usuarios";
-            var e, t, n, r,
-                o = document.getElementById("kt_table"),
-                c = () => {},
-                l = () => {
-                    const checkboxes = o.querySelectorAll('[type="checkbox"]');
-                    t = document.querySelector('[data-kt-table-toolbar="base"]');
-                    n = document.querySelector('[data-kt-table-toolbar="selected"]');
-                    r = document.querySelector('[data-kt-table-select="selected_count"]');
-                    const deleteBtn = document.querySelector('[data-kt-table-select="delete_selected"]');
+        var KTUsersList = (function() {
+            const tableName = "aprovacoes";
+            const tableElement = document.getElementById("kt_table");
 
-                    checkboxes.forEach((checkbox) => {
-                        checkbox.addEventListener("click", () => {
-                            setTimeout(() => {
-                                updateSelection();
-                            }, 50);
-                        });
-                    });
-
-                    deleteBtn.addEventListener("click", () => {
-                        confirmDelete();
-                    });
-                };
-
-            const updateSelection = () => {
-                const checkboxes = o.querySelectorAll('tbody [type="checkbox"]');
-                let isSelected = false,
-                    selectedCount = 0;
+            var initTable = function() {
+                const checkboxes = tableElement.querySelectorAll('[type="checkbox"]');
+                const baseToolbar = document.querySelector('[data-kt-table-toolbar="base"]');
+                const selectedToolbar = document.querySelector('[data-kt-table-toolbar="selected"]');
+                const selectedCountElement = document.querySelector('[data-kt-table-select="selected_count"]');
+                const deleteBtn = document.querySelector('[data-kt-table-select="delete_selected"]');
 
                 checkboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {
-                        isSelected = true;
-                        selectedCount++;
-                    }
+                    checkbox.addEventListener("click", function() {
+                        setTimeout(updateSelection, 50);
+                    });
                 });
 
-                if (isSelected) {
-                    r.innerHTML = selectedCount;
-                    t.classList.add("d-none");
-                    n.classList.remove("d-none");
-                } else {
-                    t.classList.remove("d-none");
-                    n.classList.add("d-none");
+                deleteBtn.addEventListener("click", confirmDelete);
+
+                function updateSelection() {
+                    const checkboxes = tableElement.querySelectorAll('tbody [type="checkbox"]');
+                    let isSelected = false;
+                    let selectedCount = 0;
+
+                    checkboxes.forEach((checkbox) => {
+                        if (checkbox.checked) {
+                            isSelected = true;
+                            selectedCount++;
+                        }
+                    });
+
+                    if (isSelected) {
+                        selectedCountElement.textContent = selectedCount;
+                        baseToolbar.classList.add("d-none");
+                        selectedToolbar.classList.remove("d-none");
+                    } else {
+                        baseToolbar.classList.remove("d-none");
+                        selectedToolbar.classList.add("d-none");
+                    }
                 }
-            };
 
-            const confirmDelete = () => {
-                Swal.fire({
-                    text: `Tem certeza de que deseja excluir os ${tableName} selecionados?`,
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Sim, deletar!",
-                    cancelButtonText: "Não, cancelar",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-danger",
-                        cancelButton: "btn fw-bold btn-active-light-primary"
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const selected = [];
-                        $('#kt_table .form-check-input:checked').each(function() {
-                            selected.push($(this).val());
-                        });
+                function confirmDelete() {
+                    Swal.fire({
+                        text: `Tem certeza de que deseja excluir os ${tableName} selecionados?`,
+                        icon: "warning",
+                        showCancelButton: true,
+                        buttonsStyling: false,
+                        confirmButtonText: "Sim, deletar!",
+                        cancelButtonText: "Não, cancelar",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-danger",
+                            cancelButton: "btn fw-bold btn-active-light-primary"
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const selected = [];
+                            $('#kt_table .form-check-input:checked').each(function() {
+                                selected.push($(this).val());
+                            });
 
-                        $.ajax({
-                            type: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: '{{ route('usuarios.multi-delete') }}',
-                            data: {
-                                'selected': selected
-                            },
-                            success: function(response, textStatus, xhr) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: response,
-                                    showDenyButton: false,
-                                    showCancelButton: false,
-                                    confirmButtonText: 'OK'
-                                }).then((result) => {
-                                    window.location = '/' + tableName;
-                                });
-                            }
-                        });
-                    } else if (result.dismiss === "cancel") {
-                        Swal.fire({
-                            text: `Os ${tableName} selecionados não foram excluídos.`,
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, eu entendi!",
-                            customClass: {
-                                confirmButton: "btn fw-bold btn-primary"
-                            }
-                        });
-                    }
-                });
+                            $.ajax({
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: '{{ route('usuarios.multi-delete') }}',
+                                data: {
+                                    'selected': selected
+                                },
+                                success: function(response, textStatus, xhr) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response,
+                                        showDenyButton: false,
+                                        showCancelButton: false,
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        window.location = '/' + tableName;
+                                    });
+                                }
+                            });
+                        } else if (result.dismiss === "cancel") {
+                            Swal.fire({
+                                text: `Os ${tableName} selecionados não foram excluídos.`,
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, eu entendi!",
+                                customClass: {
+                                    confirmButton: "btn fw-bold btn-primary"
+                                }
+                            });
+                        }
+                    });
+                }
             };
 
             return {
                 init: function() {
-                    if (o) {
-                        o.querySelectorAll("tbody tr").forEach((row) => {
+                    if (tableElement) {
+                        tableElement.querySelectorAll("tbody tr").forEach((row) => {
                             const cells = row.querySelectorAll("td");
                             const dateText = cells[2].innerText.toLowerCase();
                             const currentDate = moment().subtract(0, "minutes").format();
                             cells[0].setAttribute("data-order", currentDate);
                         });
 
-                        e = $(o).DataTable({
+                        var dataTable = $(tableElement).DataTable({
                             info: false,
                             order: [],
                             pageLength: 10,
@@ -286,38 +287,37 @@
                                 targets: 0,
                                 orderable: false,
                             }]
-                        }).on("draw", () => {
-                            l();
-                            c();
-                            updateSelection();
+                        }).on("draw", function() {
+                            initTable();
                         });
 
-                        l();
+                        initTable();
 
                         document.querySelector('[data-kt-table-filter="search"]').addEventListener(
                             "keyup",
-                            (event) => {
-                                e.search(event.target.value).draw();
+                            function(event) {
+                                dataTable.search(event.target.value).draw();
                             }
                         );
 
                         document.querySelector('[data-kt-table-filter="reset"]').addEventListener(
                             "click",
-                            () => {
+                            function() {
                                 document.querySelector('[data-kt-table-filter="form"]').querySelectorAll(
-                                    "select").forEach((select) => {
+                                    "select"
+                                ).forEach((select) => {
                                     $(select).val("").trigger("change");
                                 });
-                                e.search("").draw();
+                                dataTable.search("").draw();
                             }
                         );
 
-                        (() => {
+                        (function() {
                             const form = document.querySelector('[data-kt-table-filter="form"]');
                             const filterBtn = form.querySelector('[data-kt-table-filter="filter"]');
                             const selects = form.querySelectorAll("select");
 
-                            filterBtn.addEventListener("click", () => {
+                            filterBtn.addEventListener("click", function() {
                                 let filterString = "";
 
                                 selects.forEach((select, index) => {
@@ -329,15 +329,15 @@
                                     }
                                 });
 
-                                e.search(filterString).draw();
+                                dataTable.search(filterString).draw();
                             });
                         })();
                     }
                 }
             };
-        }();
+        })();
 
-        KTUtil.onDOMContentLoaded(() => {
+        KTUtil.onDOMContentLoaded(function() {
             KTUsersList.init();
         });
     </script>

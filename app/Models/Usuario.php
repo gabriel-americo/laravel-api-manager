@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +31,11 @@ class Usuario extends Authenticatable
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'role_usuario', 'usuario_id', 'role_id');
+    }
+
+    public function ideiaPergunta() : HasMany
+    {
+        return $this->hasMany(IdeiaPergunta::class, 'usuario_id', 'id');
     }
 
     // Criptografa a senha antes de atribuí-la ao modelo

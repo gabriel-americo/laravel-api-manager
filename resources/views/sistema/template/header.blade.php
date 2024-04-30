@@ -1,8 +1,7 @@
-<div id="kt_app_header" class="app-header" data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}"
+<div class="app-header" data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}"
     data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '0'}"
     data-kt-sticky-animation="false">
-    <div class="app-container container-fluid d-flex align-items-stretch justify-content-between"
-        id="kt_app_header_container">
+    <div class="app-container container-fluid d-flex align-items-stretch justify-content-between">
         <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="Show sidebar menu">
             <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
                 <i class="ki-duotone ki-abstract-14 fs-2 fs-md-1">
@@ -54,9 +53,6 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="kt_topbar_notifications_1" role="tabpanel">
                                 <div class="scroll-y mh-325px my-5 px-8">
-
-
-
                                     <div class="d-flex flex-stack py-4">
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-35px me-4">
@@ -101,7 +97,8 @@
                                         <i class="ki-duotone ki-arrow-right fs-5">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
-                                        </i></a>
+                                        </i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -112,10 +109,12 @@
                     <div class="cursor-pointer symbol symbol-35px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        @if(Auth::user()->imagem && File::exists(public_path('storage/img/usuarios/' . Auth::user()->imagem)))
-                            <img src="{{ asset('storage/img/usuarios/' . Auth::user()->imagem) }}" alt="{{ Auth::user()->nome }}" class="rounded-3" />
+                        @if (Auth::user()->imagem && File::exists(public_path('storage/img/usuarios/' . Auth::user()->imagem)))
+                            <img src="{{ asset('storage/img/usuarios/' . Auth::user()->imagem) }}"
+                                alt="{{ Auth::user()->nome }}" class="rounded-3" />
                         @else
-                            <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ Auth::user()->nome }}" class="w-100" />
+                            <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ Auth::user()->nome }}"
+                                class="w-100" />
                         @endif
                     </div>
 
@@ -124,17 +123,20 @@
                         <div class="menu-item px-3">
                             <div class="menu-content d-flex align-items-center px-3">
                                 <div class="symbol symbol-50px me-5">
-                                    @if(Auth::user()->imagem && File::exists(public_path('storage/img/usuarios/' . Auth::user()->imagem)))
-                                        <img src="{{ asset('storage/img/usuarios/' . Auth::user()->imagem) }}" alt="{{ Auth::user()->nome }}" />
+                                    @if (Auth::user()->imagem && File::exists(public_path('storage/img/usuarios/' . Auth::user()->imagem)))
+                                        <img src="{{ asset('storage/img/usuarios/' . Auth::user()->imagem) }}"
+                                            alt="{{ Auth::user()->nome }}" />
                                     @else
-                                        <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="{{ Auth::user()->nome }}" class="w-100" />
+                                        <img src="{{ asset('assets/media/avatars/blank.png') }}"
+                                            alt="{{ Auth::user()->nome }}" class="w-100" />
                                     @endif
                                 </div>
 
                                 <div class="d-flex flex-column">
                                     <div class="fw-bold d-flex align-items-center fs-5">
                                         {{ strtok(Auth::user()->nome, ' ') }}
-                                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ Auth::user()->roles->first()->nome }}</span>
+                                        <span
+                                            class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ Auth::user()->roles->first()->nome }}</span>
                                     </div>
                                     <a href="#"
                                         class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
@@ -200,6 +202,6 @@
     </div>
 </div>
 
-<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+<div class="app-wrapper flex-column flex-row-fluid">
     @include('sistema.template.menu')
-    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+    <div class="app-main flex-column flex-row-fluid">

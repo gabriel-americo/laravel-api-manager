@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Aprovacao;
 use App\Models\Ideia;
+use App\Models\Resposta;
 
 class AprovacaoController extends Controller
 {
@@ -27,9 +28,7 @@ class AprovacaoController extends Controller
 
     public function create()
     {
-        $ideias = $this->ideia->doesntHave('aprovacao')
-            ->select('id', 'nome')
-            ->get();
+        $ideias = $this->ideia->doesntHave('aprovacao')->select('id', 'nome')->get();
 
         return view('sistema.aprovacoes.create', compact('ideias'));
     }
@@ -45,7 +44,7 @@ class AprovacaoController extends Controller
 
             flash('Aprovação cadastrada com sucesso!')->success();
 
-            return redirect()->route('aprovacao.index');
+            return redirect()->route('aprovacoes.index');
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
 
@@ -54,17 +53,24 @@ class AprovacaoController extends Controller
     }
 
     public function show(string $id)
-{
-    $aprovacao = $this->aprovacao->with('ideias', 'imagemAprovacao', 'alteracao.usuarios', 'resposta.usuarios')
-        ->findOrFail($id);
+    {
+        $aprovacao = $this->aprovacao->with(['ideia', 'images', 'alteracoes.usuario'])->findOrFail($id);
 
-    $status = $aprovacao->alteracao->where('status', 1)->count();
-    $total = $aprovacao->alteracao->count();
+        $alteracao = $aprovacao->alteracoes()->orderBy('id', 'desc')->get();
 
-    $porcentagem = $total != 0 ? round($status * 100 / $total) : 0;
+        $resposta = Resposta::with(['usuario', 'alteracao'])->orderBy('id', 'desc')->get();
 
-    return view('sistema.aprovacao.show', compact('aprovacao', 'porcentagem'));
-}
+        $status = $alteracao->where('status', 1)->count();
+        $total = $alteracao->count();
+
+        $class = $aprovacao->status == "Sim" ? "success" : "danger";
+
+        $checked = $aprovacao->status == 'Sim' ? 'checked' : '';
+
+        $porcentagem = $total != 0 ? round($status * 100 / $total) : 0;
+
+        return view('sistema.aprovacoes.show', compact('aprovacao', 'resposta', 'alteracao', 'porcentagem', 'class', 'checked'));
+    }
 
     public function edit(string $id)
     {
@@ -86,7 +92,7 @@ class AprovacaoController extends Controller
 
             flash('Aprovação atualizada com sucesso!')->success();
 
-            return redirect()->route('aprovacao.index');
+            return redirect()->route('aprovacoes.index');
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
 
@@ -103,7 +109,7 @@ class AprovacaoController extends Controller
 
             flash('Aprovação removida com sucesso!')->success();
 
-            return redirect()->route('aprovacao.index');
+            return redirect()->route('aprovacoes.index');
         } catch (\Exception $e) {
             flash($e->getMessage())->warning();
 
@@ -116,5 +122,52 @@ class AprovacaoController extends Controller
         $this->aprovacao->whereIn('id', $request->get('selected'))->delete();
 
         return response("Aprovações selecionadas excluídas com sucesso.", 200);
+    }
+
+    public function createImages($id)
+    {
+        $aprovacao = $this->aprovacao->findOrFail($id);
+
+        return view('sistema.aprovacoes.images', compact('aprovacao'));
+    }
+
+    public function uploadImages(Request $request)
+    {
+        $request->validate([
+            'aprovacao_id' => 'required|exists:ideias,id',
+            'imageFile.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        try {
+            $aprovacao = $this->aprovacao->findOrFail($request->aprovacao_id);
+
+            foreach ($request->file('imageFile') as $file) {
+                $path = 'public/img/aprovacoes/';
+                $imageName = uniqid() . '-' . str_replace(" ", "-", trim($file->getClientOriginalName()));
+                $file->storeAs($path, $imageName);
+                $aprovacao->aprovacaoImagem()->create(['imagem' => $imageName]);
+            }
+
+            return response()->json(['success' => 'Imagem enviada com sucesso.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao fazer upload da imagem.']);
+        }
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $status = $request->input('status');
+        $aprovacaoId = $request->input('id');
+
+        $aprovacao = $this->aprovacao->findOrFail($aprovacaoId);
+
+        if ($aprovacao) {
+            $aprovacao->status = $status;
+            $aprovacao->save();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
     }
 }

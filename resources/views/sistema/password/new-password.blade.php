@@ -22,13 +22,15 @@
             <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
                 <div class="d-flex flex-center flex-column flex-lg-row-fluid">
                     <div class="w-lg-500px p-10">
-                        <form class="form w-100" novalidate="novalidate" action="{{ route("password.reset.post") }}" method="POST">
+                        <form class="form w-100" novalidate="novalidate" action="{{ route('password.reset.post') }}"
+                            method="POST">
                             @csrf
                             <div class="text-center mb-10">
                                 <h1 class="text-dark fw-bolder mb-3">Configurar nova senha</h1>
 
                                 <div class="text-gray-500 fw-semibold fs-6">Você já redefiniu a senha?
-                                <a href="{{ route("login") }}" class="link-primary fw-bold">Entrar</a></div>
+                                    <a href="{{ route('login') }}" class="link-primary fw-bold">Entrar</a>
+                                </div>
                             </div>
 
                             @if ($errors->all())
@@ -42,33 +44,43 @@
                             <input type="text" hidden name="token" value="{{ $token }}">
 
                             <div class="mb-3">
-                                <input class="form-control bg-transparent" type="text" placeholder="E-mail" name="email" />
+                                <input class="form-control bg-transparent" type="text" placeholder="E-mail"
+                                    name="email" />
                             </div>
 
                             <div class="fv-row mb-8" data-kt-password-meter="true">
                                 <div class="mb-1">
 
                                     <div class="position-relative mb-3">
-                                        <input class="form-control bg-transparent" id="newpassword" type="password" placeholder="Senha" name="password" autocomplete="off" />
-                                        <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                        <input class="form-control bg-transparent" id="newpassword" type="password"
+                                            placeholder="Senha" name="password" autocomplete="off" />
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            data-kt-password-meter-control="visibility">
                                             <i class="ki-duotone ki-eye-slash fs-2"></i>
                                             <i class="ki-duotone ki-eye fs-2 d-none"></i>
                                         </span>
                                     </div>
 
-                                    <div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                    <div class="d-flex align-items-center mb-3"
+                                        data-kt-password-meter-control="highlight">
+                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                        </div>
+                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                        </div>
+                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                        </div>
                                         <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
                                     </div>
                                 </div>
 
-                                <div class="text-muted">Use 6 ou mais caracteres com uma mistura de letras, números e símbolos.</div>
+                                <div class="text-muted">Use 6 ou mais caracteres com uma mistura de letras, números e
+                                    símbolos.</div>
                             </div>
 
                             <div class="fv-row mb-8">
-                                <input type="password" id="confirmpassword" placeholder="Repetir Senha" name="confirm-password" autocomplete="off" class="form-control bg-transparent" />
+                                <input type="password" id="confirmpassword" placeholder="Repetir Senha"
+                                    name="confirm-password" autocomplete="off" class="form-control bg-transparent" />
                             </div>
 
                             <div class="d-grid mb-10">
@@ -109,7 +121,8 @@
                                 <a href="#" class="menu-link d-flex px-5" data-kt-lang="Ingles">
                                     <span class="symbol symbol-20px me-4">
                                         <img data-kt-element="lang-flag" class="rounded-1"
-                                            src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
+                                            src="{{ asset('assets/media/flags/united-states.svg') }}"
+                                            alt="" />
                                     </span>
                                     <span data-kt-element="lang-name">Inglês</span>
                                 </a>

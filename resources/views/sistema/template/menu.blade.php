@@ -2,12 +2,12 @@
     data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px"
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-        <a href="{{ route('dashboard') }}">
+        <!--<a href="{{ route('dashboard') }}">
             <img alt="Logo" src="{{ asset('/assets/media/logos/default-dark.svg') }}"
                 class="h-25px app-sidebar-logo-default" />
             <img alt="Logo" src="{{ asset('/assets/media/logos/default-small.svg') }}"
                 class="h-20px app-sidebar-logo-minimize" />
-        </a>
+        </a>-->
 
         <div id="kt_app_sidebar_toggle"
             class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary h-30px w-30px position-absolute top-50 start-100 translate-middle rotate"
