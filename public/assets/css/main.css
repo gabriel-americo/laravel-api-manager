@@ -1,6 +1,6 @@
 /* Custom Main Css */
 .button-delete {
-  border: none;
-  background: none;
+  border: 0;
+  background: 0 0;
   width: 100%;
 }/*# sourceMappingURL=main.css.map */

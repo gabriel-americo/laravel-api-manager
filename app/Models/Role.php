@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $fillable = ['nome', 'descricao'];
+    use HasFactory;
 
-    // Definindo o relacionamento muitos-para-muitos com o modelo Usuario
-    public function usuarios(): BelongsToMany
-    {
-        return $this->belongsToMany(Usuario::class);
-    }
+    public $timestamps = false;
+
+    protected $fillable = ['name', 'description'];
+
 }

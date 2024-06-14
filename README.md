@@ -1,12 +1,23 @@
-# Sistema de Gerenciamento (CMS) em Laravel
+# Sistema de Gerenciamento (CMS) em Laravel 11
 
-## Diagrama BD
-![Database Tables](database/images/bd_1.jpg)
-![Database Tables](database/images/bd_2.jpg)
+## Tabela de Conteúdos
+
+1. [Visão Geral](#visão-geral)
+2. [Diagrama BD](#diagrama-bd)
+3. [Funcionalidades Principais](#funcionalidades-principais)
+4. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+5. [Instalação e Execução](#instalação-e-execução)
+6. [Contribuições](#contribuições)
+7. [Licença](#licença)
 
 ## Visão Geral
 
 O Sistema de Gerenciamento é uma plataforma robusta e flexível para administrar e publicar conteúdo dinâmico na web. Construído com base no Laravel, este sistema oferece uma experiência completa de administração para usuários que desejam criar, editar e gerenciar diversos tipos de conteúdo de forma eficiente e intuitiva.
+
+## Diagrama BD
+
+![Database Tables](database/images/bd_1.jpg)
+![Database Tables](database/images/bd_2.jpg)
 
 ## Funcionalidades Principais
 
@@ -33,18 +44,19 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 
 ## Tecnologias Utilizadas
 
--   **Laravel Framework:** Base sólida e moderna para desenvolvimento web.
--   **MySQL ou Outro Banco de Dados Relacional:** Armazenamento de dados estruturados.
--   **Front-end com Blade Templates e Bootstrap:** Desenvolvimento de interfaces responsivas e visualmente atraentes.
--   **Integrações de APIs Externas:** Conexão com serviços externos para funcionalidades específicas.
+- **[Laravel Framework](https://laravel.com/):** Base sólida e moderna para desenvolvimento web.
+- **MySQL ou Outro Banco de Dados Relacional:** Armazenamento de dados estruturados.
+- **Front-end com Blade Templates e [Bootstrap](https://getbootstrap.com/):** Desenvolvimento de interfaces responsivas e visualmente atraentes.
+- **Integrações de APIs Externas:** Conexão com serviços externos para funcionalidades específicas.
 
 ## Instalação e Execução
 
 ### Requisitos
 
--   PHP 8.1 ou superior
+-   PHP 8.2 ou superior
 -   Composer
 -   Banco de dados Relacional (MySQL, PostgreSQL, etc.)
+- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/)
 
 ### Passos para Instalação
 
@@ -80,7 +92,6 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
 
     ```bash
     composer install
-    composer require laracasts/flash
     ```
 
 6. Configure o arquivo `.env` com as informações do banco de dados:
@@ -106,7 +117,13 @@ O Sistema de Gerenciamento é uma plataforma robusta e flexível para administra
     php artisan migrate
     ```
 
-9. Acesse o projeto:
+9. Cria um link simbólico para o diretório public/storage (Upload de imagens):
+
+    ```bash
+    php artisan storage:link
+    ```
+
+10. Acesse o projeto:
 
     ```bash
     http://localhost:8000

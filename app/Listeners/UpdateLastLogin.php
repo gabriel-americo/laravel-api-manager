@@ -4,16 +4,22 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Events\UserLoggedIn;
 
-class UpdateLastLogin implements ShouldQueue
+class UpdateLastLogin
 {
-    use InteractsWithQueue;
-
-    public function handle(UserLoggedIn $event)
+    /**
+     * Create the event listener.
+     */
+    public function __construct()
     {
-        $user = $event->user;
-        $user->ultimo_login = now();
-        $user->save();
+        //
+    }
+
+    /**
+     * Handle the event.
+     */
+    public function handle(object $event): void
+    {
+        //
     }
 }
