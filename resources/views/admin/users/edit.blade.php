@@ -65,9 +65,11 @@
                                 </div>
                             </div>
 
-                            <x-text-input name="name" label="Nome Completo" placeholder="Nome Completo" value="{{ $user->name }}" required="true" />
+                            <x-text-input name="name" label="Nome Completo" placeholder="Nome Completo"
+                                value="{{ $user->name }}" required="true" />
 
-                            <x-text-input name="user" label="Usuário" placeholder="Usuário" value="{{ $user->user }}" required="true" />
+                            <x-text-input name="user" label="Usuário" placeholder="Usuário" value="{{ $user->user }}"
+                                required="true" />
 
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">

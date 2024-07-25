@@ -62,11 +62,7 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        $user = $this->user->with('roles')->find($id);
-
-        if (!$user) {
-            return redirect()->route('users.index')->with('error', 'Usuário informado não existe!');
-        }
+        $user = $this->user->with('roles')->findOrFail($id);
 
         $image = 'assets/media/avatars/blank.png';
 
@@ -79,7 +75,7 @@ class UserController extends Controller
 
     public function edit(string $id)
     {
-        $user = $this->findUser($id);
+        $user = $this->user->findOrFail($id);
 
         $user->imagePath = File::exists(public_path('storage/img/users/' . $user->image))
             ? asset('storage/img/users/' . $user->image)
@@ -93,7 +89,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
-        $user = $this->findUser($id);
+        $user = $this->user->findOrFail($id);
 
         $data = $request->only(['nome', 'user', 'sexo']);
         $data['status'] = $request->has('status') ? '1' : '0';
@@ -111,7 +107,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = $this->findUser($id);
+        $user = $this->user->findOrFail($id);
 
         if (Auth::user()->id === $user->id) {
             return redirect()->back()->with('error', 'Você não pode excluir seu proprio perfil.');
@@ -132,7 +128,7 @@ class UserController extends Controller
 
     public function changeEmail(Request $request, $id)
     {
-        $user = $this->findUser($id);
+        $user = $this->user->findOrFail($id);
 
         if (Hash::check($request->confirmemailpassword, $user->password)) {
             $user->email = $request->email;
@@ -146,7 +142,7 @@ class UserController extends Controller
 
     public function changePassword(Request $request, $id)
     {
-        $user = $this->findUser($id);
+        $user = $this->user->findOrFail($id);
 
         $currentPassword = $request->input('currentpassword');
         $newPassword = $request->input('newpassword');
@@ -198,16 +194,5 @@ class UserController extends Controller
             $request->image->storeAs($path, $imageName);
             $data['image'] = $imageName;
         }
-    }
-
-    private function findUser($id)
-    {
-        $user = $this->user->find($id);
-
-        if (!$user) {
-            return redirect()->route('usuarios.index')->with('error', 'Usuário informado não existe!');
-        }
-
-        return $user;
     }
 }

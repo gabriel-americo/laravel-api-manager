@@ -40,7 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function ideaQuestions(): HasMany
     {
-        return $this->hasMany(IdeaQuestion::class, 'user_id', 'id');
+        return $this->hasMany(IdeaQuestion::class, 'user_id');
     }
 
     public function setPasswordAttribute($password)

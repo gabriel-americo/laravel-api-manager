@@ -125,6 +125,8 @@
 
                             <x-text-input name="cell_addresses" label="Celular" placeholder="Celular" />
 
+                            <x-text-input name="email_cobrancas" id="email_cob" label="E-mail" placeholder="E-mail" />
+
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label fw-bold fs-6">E-mail</label>
                                 <div class="col-lg-8">

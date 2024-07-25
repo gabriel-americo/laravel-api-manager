@@ -65,13 +65,15 @@
                                 </div>
                             </div>
 
-                            <x-text-input name="name" label="Nome Completo" placeholder="Nome Completo" required="true" />
+                            <x-text-input name="name" label="Nome Completo" placeholder="Nome Completo"
+                                required="true" />
 
                             <x-text-input name="user" label="Usuário" placeholder="Usuário" required="true" />
-                            
+
                             <x-text-input name="email" label="E-mail" placeholder="E-mail" required="true" />
 
-                            <x-text-input name="password" type="password" label="Senha" placeholder="Senha" required="true" />
+                            <x-text-input name="password" type="password" label="Senha" placeholder="Senha"
+                                required="true" />
 
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">
