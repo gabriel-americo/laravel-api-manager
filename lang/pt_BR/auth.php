@@ -17,4 +17,8 @@ return [
     'password' => 'A senha informada está incorreta.',
     'throttle' => 'Muitas tentativas de login. Tente novamente em :seconds segundos.',
 
+    'login_system' => 'Sistema de Gerenciamento',
+    'login_admin' => 'Faça login no Administrador',
+    'email_user' => 'Email ou Username',
+
 ];

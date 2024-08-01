@@ -17,4 +17,7 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'login_system' => 'Management System',
+    'login_admin' => 'Login to Admin',
+    'email_user' => 'Email or Username',
 ];

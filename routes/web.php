@@ -7,8 +7,11 @@ use App\Http\Controllers\Admin\ApprovalImagesController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\IdeaController;
 use App\Http\Controllers\Admin\IdeaImageController;
+use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\ModificationController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 Route::group(['middleware' => ['auth', 'status'], 'prefix' => '/'], function () {
     Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');

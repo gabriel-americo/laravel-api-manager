@@ -1,7 +1,8 @@
 <?php
 
+use Faker\Test\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+
 
 /*
 |--------------------------------------------------------------------------
